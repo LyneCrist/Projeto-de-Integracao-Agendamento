@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block title %}
+            <title>Master</title>
+        {% endblock title %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body>
+        <form action="{% url 'logout_form' %}" method="post" class="navbar-right">
+            {% csrf_token %}
+            <ul class="topnav">
+                <li>
+                    <a href="{% url 'home' %}" class="active">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'pacientes' %}">Pacientes</a>
+                </li>
+                <li>
+                    <a href="{% url 'usuarios' %}">Usuários</a>
+                </li>
+                <li>
+                    <span>Olá {{ user.username }}!</span>
+                </li>
+                <li>
+                    <a href="{% url 'logout_form' %}">Log off</a>
+                </li>
+            </ul>
+        </form>
+        {% comment %} <img src="{% static 'img/image.png' %}" alt=""> {% endcomment %}
+        <div id="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
