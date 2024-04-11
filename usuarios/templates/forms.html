@@ -1,9 +1,10 @@
-{% extends "master.html" %}
+{% extends "base.html" %}
 {% block title %}
     Cadastro Usuário
 {% endblock title %}
 {% block content %}
-    <form action="" method="post">
+    <form method="post" action="{% url 'cadastro_usuario' %}">
+        {% csrf_token %}
         <div>
             <label for="nom">Nome</label>
             <input type="text"

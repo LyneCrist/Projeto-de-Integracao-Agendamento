@@ -6,29 +6,31 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% block title %}
-            <title>Master</title>
-        {% endblock title %}
+        <title>
+            {% block title %}
+                Master
+            {% endblock title %}
+        </title>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head>
     <body>
-        <form action="{% url 'logout_form' %}" method="post" class="navbar-right">
+        <form action="{% url 'logout' %}" method="post" class="navbar-right">
             {% csrf_token %}
-            <ul class="topnav">
+            <ul class="horizontal">
                 <li>
                     <a href="{% url 'home' %}" class="active">Home</a>
                 </li>
                 <li>
-                    <a href="{% url 'pacientes' %}">Pacientes</a>
+                    <a href="{% url 'lista_pacientes' %}">Pacientes</a>
                 </li>
                 <li>
-                    <a href="{% url 'usuarios' %}">Usuários</a>
+                    <a href="{% url 'lista_usuarios' %}">Usuários</a>
                 </li>
                 <li>
                     <span>Olá {{ user.username }}!</span>
                 </li>
                 <li>
-                    <a href="{% url 'logout_form' %}">Log off</a>
+                    <a href="{% url 'logout' %}">Log off</a>
                 </li>
             </ul>
         </form>
