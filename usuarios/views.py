@@ -1,8 +1,24 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from usuarios.forms import UsuarioForm
+
+
+def index(request):
+
+    # context = {}
+
+    # form = UsuarioForm()
+
+    # context["form"] = form
+
+    return render(request, "form.html", context)
 
 
 def login(request):
+    # if request.method == "POST":
+    # form = RegisterForm(request.POST)
+    # return super().metho
+
     return render(request, "login.html")
 
 
