@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 
 
 def login(request):
-    print("chegando aqui login")
     return render(request, 'login.html')
 
 # @login_required(login_url='/auth/login')
