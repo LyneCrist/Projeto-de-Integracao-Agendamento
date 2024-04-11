@@ -6,21 +6,36 @@ def login(request):
     print("chegando aqui login")
     return render(request, 'login.html')
 
+# @login_required(login_url='/auth/login')
+
 
 def logout(request):
     return render(request, 'login.html')
 
-
-def cadastro(request):
-
-    return render(request, 'forms.html')
+# @login_required(login_url='/auth/login')
 
 
-def lista_usuarios(request):
+def listar(request):
 
     return render(request, 'lista.html')
 
+# @login_required(login_url='/auth/login')
+
+
+def cadastrar(request):
+
+    return render(request, 'forms.html')
 
 # @login_required(login_url='/auth/login')
-# def master(request):
-#     return render(request, 'templates/master.html')
+
+
+def editar(request, id):
+
+    return render(request, 'forms.html')
+
+# @login_required(login_url='/auth/login')
+
+
+def excluir(request, id):
+
+    return render(request, 'lista.html')
