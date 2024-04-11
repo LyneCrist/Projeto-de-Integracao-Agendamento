@@ -26,16 +26,14 @@
                 <li>
                     <a href="{% url 'lista_usuarios' %}">Usuários</a>
                 </li>
-                <li>
-                    <span>Olá {{ user.username }}!</span>
-                </li>
-                <li>
+                <li class="rightli" style="float:right">
+                    <span style="color: white;">Olá {{ user.username }}!</span>
                     <a href="{% url 'logout' %}">Log off</a>
                 </li>
             </ul>
         </form>
         {% comment %} <img src="{% static 'img/image.png' %}" alt=""> {% endcomment %}
-        <div id="container">
+        <div class="container">
             {% block content %}
             {% endblock content %}
         </div>

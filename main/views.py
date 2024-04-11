@@ -7,4 +7,4 @@ def home(request):
 
     # return redirect('login')
 
-    return render(request, "base.html", {})
+    return render(request, "home.html", {})
