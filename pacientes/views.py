@@ -8,4 +8,6 @@ def lista_pacientes(request):
 
 def cadastro(request):
 
-    return render(request, "forms.html")
+    print("chegando aqui cadastro")
+
+    return render(request, "cadastro_paciente.html", {})
