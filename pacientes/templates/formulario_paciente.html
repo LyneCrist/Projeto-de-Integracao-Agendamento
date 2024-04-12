@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}
+Cadastro Paciente
+{% endblock title %}
+{% block content %}
+<div class="form">
+
+    <form action="{% url 'cadastra_paciente' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form-header">
+            <div class="title">
+                <h1>Novo Paciente</h1>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="input-box">
+                <label for="nome">Primeiro Nome</label>
+                <input id="nome" type="text" name="nome" placeholder="Digite seu primeiro nome" required="">
+            </div>
+
+            <div class="input-box">
+                <label for="sobreNome">Sobrenome</label>
+                <input id="sobreNome" type="text" name="sobreNome" placeholder="Digite seu sobrenome" required="">
+            </div>
+            <div class="input-box">
+                <label for="email">SUS</label>
+                <input id="email" type="text" name="email" placeholder="Digite seu SUS" required="">
+            </div>
+
+            <div class="input-box">
+                <label for="telefone">Telefone</label>
+                <input id="telefone" type="tel" name="telefone" placeholder="(xx) xxxx-xxxx" required="">
+            </div>
+
+            <div class="input-box">
+                <label for="senha">Endereço</label>
+                <input id="senha" type="password" name="senha" placeholder="Digite seu Endereço" required="">
+            </div>
+
+
+            <div class="input-box">
+                <label for="confirmaSenha">Data do transporte</label>
+                <input id="confirmaSenha" type="password" name="confirmaSenha" placeholder="Data do transporte"
+                    required="">
+            </div>
+
+        </div>
+
+        <div class="gender-inputs">
+            <div class="gender-title">
+                <h6>Gênero</h6>
+            </div>
+
+            <div class="gender-group">
+                <div class="gender-input">
+                    <input id="feminimo" type="radio" name="genero">
+                    <label for="feminimo">Feminino</label>
+                </div>
+
+                <div class="gender-input">
+                    <input id="masculino" type="radio" name="genero">
+                    <label for="masculino">Masculino</label>
+                </div>
+
+                <div class="gender-input">
+                    <input id="outro" type="radio" name="genero">
+                    <label for="outro">Outros</label>
+                </div>
+
+                <div class="gender-input">
+                    <input id="semGenero" type="radio" name="genero">
+                    <label for="semGenero">Prefiro não dizer</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="continue-button">
+            <button type="submit">Confirmar</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
