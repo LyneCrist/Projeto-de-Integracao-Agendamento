@@ -1,13 +1,41 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from .forms import PacienteForm
 
 
-def lista_pacientes(request):
-
+def listar(request):
     return render(request, "lista_pacientes.html")
 
 
-def cadastro(request):
+def cadastrar(request):
 
-    print("chegando aqui cadastro")
+    print(type(request))
 
-    return render(request, "cadastro_paciente.html", {})
+    # if request.method == "POST":
+
+    #     # "nome"
+    #     # "sobreNome"
+    #     # "email"
+    #     # "telefone"
+    #     # "senha"
+    #     # "confirmaSenha"
+    #     # "genero"
+
+    #     form = PacienteForm(request.POST)
+
+    #     if form.is_valid():
+
+    #         return HttpResponseRedirect("/thanks/")
+
+    # form = PacienteForm()
+
+    return render(request, "formulario_paciente.html", {"form": ""})
+
+
+def atualizar(request):
+    return render(request, "formulario_paciente.html")
+
+
+def excluir(request):
+    return render(request, "lista_pacientes.html")
