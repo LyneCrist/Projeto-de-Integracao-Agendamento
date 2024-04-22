@@ -1,19 +1,25 @@
 {% extends "base.html" %}
 {% block title %}
-    Cadastro Paciente
+Cadastro Paciente
 {% endblock title %}
 {% block content %}
-    <form class="form" action="{% url 'cadastra_paciente' %}" method="post">
-        {% csrf_token %}
-        <div class="form-header">
-            <div class="title">
-                <h1>Novo Paciente</h1>
-            </div>
+<form class="form" action="{% url 'cadastra_paciente' %}" method="post">
+    {% csrf_token %}
+    <div class="form-header">
+        <div class="title">
+            <h1>Novo Paciente</h1>
         </div>
-        {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
-        {{ form.as_p }}
-        <div class="continue-button">
-            <button type="submit">Confirmar</button>
-        </div>
-    </form>
+    </div>
+    {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+    </div>
+    {% endfor %}
+    <div class="continue-button">
+        <input type="submit" value="Confirmar">
+    </div>
+</form>
 {% endblock content %}

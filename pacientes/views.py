@@ -6,6 +6,7 @@ from .forms import PacienteForm
 
 
 def listar(request):
+    print("listando pacientes")
     return render(request, "lista_pacientes.html")
 
 
@@ -20,26 +21,30 @@ def cadastrar(request):
     # return render(request, "formulario_paciente", context)
 
     context = {}
-
     context["form"] = PacienteForm()
     context["title"] = "Cadastro de Paciente"
 
     if request.method == "POST":
 
-        form = PacienteForm(request.POST)
+        context["form"] = PacienteForm(request.POST)
 
-        if form.is_valid():
+        if context["form"].is_valid():
             try:
                 # form.save()
-                print(form.cleaned_data)
+                print(context["form"].cleaned_data)
 
-                return redirect("/lista_pacientes/")
+                return redirect("lista_pacientes")
             except:
-                return render(request, "formulario_paciente", context)
-        else:
-            context["erros"] = form.errors
 
-    return render(request, "formulario_paciente", context)
+                return render(request, "formulario_paciente", context)
+
+        context["erros"] = context["form"].errors.as_data()
+
+        print(context)
+
+        # print("context['erros']:", context["erros"])
+
+    return render(request, "formulario_paciente.html", context)
 
     # if request.method == "POST":
 

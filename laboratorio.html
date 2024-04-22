@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: arial;
+            font-size: 16px;
+        }
+
+        .form_row {
+            position: relative;
+            border-radius: 5px;
+            background-color: #f9fafc;
+            padding: 30px;
+        }
+
+        .form_row h2 {
+            text-align: center;
+        }
+
+        .form_row textarea:focus,
+        input:focus {
+            outline: none;
+        }
+
+        .form_row label {
+            font-size: 20px;
+        }
+
+        .form_row input {
+            box-shadow: 0 5px 25px 0 rgba(30, 30, 30, 0.15);
+            appearance: none;
+            border-color: transparent;
+            font-size: 18px;
+        }
+
+        .form_row input[type=text] {
+            color: #079c7e;
+            border-radius: 4px;
+            border: none;
+            width: 100%;
+            padding: 5px 20px;
+            /* margin: 8px 0; */
+            box-sizing: border-box;
+        }
+
+        .form_row input[type=number] {
+            color: #079c7e;
+            width: 100%;
+            padding: 5px 20px;
+            /* margin: 8px 0; */
+            box-sizing: border-box;
+        }
+
+        .form_row input[type=email] {
+            color: #079c7e;
+            width: 100%;
+            padding: 5px 20px;
+            /* margin: 8px 0; */
+            box-sizing: border-box;
+        }
+
+        .form_row input[type=button] {
+            width: 100%;
+            background-color: #079c7e;
+            cursor: pointer;
+            padding: 13px 35px;
+            border-radius: 5px;
+            border: none;
+            color: white !important;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin: 20px 0px 20px;
+        }
+
+        .row {
+            position: relative;
+            /* border: 1px red solid; */
+            margin: 6px 0 16px 0;
+        }
+
+        .col-1 {
+            width: 20%;
+            /* border: 1px black solid; */
+            margin: 1px 0 10px 0;
+        }
+
+        .col-2 {
+            /* border: 1px black solid; */
+            margin: 1px 0 10px 0;
+        }
+
+        .col-3 {
+            width: 60%;
+            /* border: 1px black solid; */
+            margin: 1px 0 10px 0;
+        }
+
+        .col-4 {
+            width: 80%;
+            /* border: 1px black solid; */
+            margin: 1px 0 10px 0;
+        }
+
+        .col-5 {
+            width: 100%;
+            /* border: 1px black solid; */
+            margin: 1px 0 10px 0;
+        }
+
+        @media only screen and (min-width : 320px) {
+            .form_row {
+                width: 80%;
+            }
+
+            .col-2 {
+                width: 60%;
+            }
+
+            /* body {
+                background-color: yellow;
+            } */
+        }
+
+        @media only screen and (min-width : 414px) {
+            .form_row {
+                width: 70%;
+            }
+
+            .col-2 {
+                width: 40%;
+            }
+
+            /* body {
+                background-color: blue;
+            } */
+        }
+
+
+        @media only screen and (min-width : 1000px) {
+            .form_row {
+                width: 65%;
+            }
+
+            .col-2 {
+                width: 40%;
+            }
+
+            /* body {
+                background-color: rgb(7, 211, 146);
+            } */
+        }
+
+        @media only screen and (min-width : 1024px) {
+            .form_row {
+                width: 50%;
+            }
+
+            .col-2 {
+                width: 40%;
+            }
+
+            /* body {
+                background-color: rgb(7, 211, 146);
+            } */
+        }
+
+        @media only screen and (min-width : 1520px) {
+            .form_row {
+                width: 40%;
+            }
+
+            .col-2 {
+                width: 40%;
+            }
+
+            /* body {
+                background-color: rgb(7, 211, 146);
+            } */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="" class="form_row" name="frmEmail">
+            <div class="row">
+                <div class="col-5">
+                    <h2>Cadastro de Paciente</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <label for="nome">Nome</label>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="nome" id="nome">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <label for="sobreNome">Sobre Nome</label>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="sobreNome" id="sobreNome">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <label for="sus">SUS</label>
+                </div>
+                <div class="col-3">
+                    <input type="number" name="sus" id="sus">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <label for="email">Email</label>
+                </div>
+                <div class="col-4">
+                    <input type="email" name="email" id="email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <input type="button" value="Confirmar">
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        //  Immediately-Invoked Function Expression (IIFE)
+        ; ((document) => {
+
+            // document.getElementById("nome").addEventListener("beforeinput", event => {
+            //     console.log("value:", event.target.value);
+            // });
+            let charTyped = event.target.value;
+            // let letterRegex = /[a-zA-Z._^%$#!~@,-\s\b`&]+/;
+            // let letterRegex = /^[a-zA-Z\s\b]*$/;
+            let letterRegex = /^[a-zA-Z\u00C0-\u00FF\s\b]*$/;
+
+            document.getElementById("nome").addEventListener("input", event => {
+
+                if (!letterRegex.test(charTyped)) {
+                    event.target.value = charTyped.slice(0, -1);
+                }
+            });
+
+            document.getElementById("sus").addEventListener('input', e => {
+
+                let value = e.target.value;
+
+                if (value.length > 4)
+                    e.target.value = value.slice(0, 4);
+            });
+
+            document.getElementById("email").addEventListener('click', e => {
+                console.log(`email:${email}`)
+            });
+
+        })(document)
+
+        // function isNumber(evt) {
+        //     evt = (evt) ? evt : window.event;
+        //     var charCode = (evt.which) ? evt.which : evt.keyCode;
+        //     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        //         return false;
+        //     }
+        //     return true;
+        // }
+    </script>
+
+</body>
+
+</html>
