@@ -8,8 +8,7 @@ class Paciente(models.Model):
         ATIVO = 1, "Ativo"
         INATIVO = 2, "Inativo"
 
-    nome = models.CharField(max_length=30)
-    sobre_nome = models.CharField(max_length=60)
+    nome = models.CharField(max_length=60)
     data_de_nascimento = models.DateTimeField()
     genero = models.IntegerField()
     cartao_sus = models.CharField(max_length=15, unique=True)

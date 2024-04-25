@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+<meta name="description" content="">
+<meta name="keywords" content="">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        html,
+        body {
+            min-width: 15px;
+        }
+
         .container {
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: arial;
             font-size: 16px;
+
         }
 
         .form_row {
@@ -25,8 +33,7 @@
             text-align: center;
         }
 
-        .form_row textarea:focus,
-        input:focus {
+        .form_row input:focus {
             outline: none;
         }
 
@@ -36,9 +43,26 @@
 
         .form_row input {
             box-shadow: 0 5px 25px 0 rgba(30, 30, 30, 0.15);
-            appearance: none;
+            /* appearance: none; */
             border-color: transparent;
             font-size: 18px;
+        }
+
+        .form_row input::placeholder {
+            /* font-weight: bold; */
+            /* opacity: 0.5; */
+            opacity: 1.5;
+            color: #079c7e;
+        }
+
+        .form_row fieldset {
+            border: 2px solid black;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .form_row legend {
+            font-size: 20px;
         }
 
         .form_row input[type=text] {
@@ -53,21 +77,53 @@
 
         .form_row input[type=number] {
             color: #079c7e;
+            border-radius: 4px;
+            border: none;
             width: 100%;
             padding: 5px 20px;
             /* margin: 8px 0; */
             box-sizing: border-box;
         }
 
-        .form_row input[type=email] {
+        .form_row input[type=date] {
             color: #079c7e;
-            width: 100%;
             padding: 5px 20px;
+            border-radius: 4px;
+            border: none;
             /* margin: 8px 0; */
             box-sizing: border-box;
         }
 
-        .form_row input[type=button] {
+        input[type='radio']:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: #d1d3d1;
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
+
+        input[type='radio']:checked:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: #079c7e;
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
+
+
+        .form_row input[type=submit] {
             width: 100%;
             background-color: #079c7e;
             cursor: pointer;
@@ -116,82 +172,92 @@
             margin: 1px 0 10px 0;
         }
 
-        @media only screen and (min-width : 320px) {
+        @media screen and (min-width : 320px) {
             .form_row {
                 width: 80%;
             }
 
-            .col-2 {
+            .col-1 {
                 width: 60%;
             }
 
-            /* body {
-                background-color: yellow;
-            } */
+            .col-2 {
+                width: 100%;
+            }
+
         }
 
-        @media only screen and (min-width : 414px) {
+        @media screen and (min-width : 414px) {
+
+            .container {
+                width: min-width !important;
+            }
+
             .form_row {
                 width: 70%;
             }
 
-            .col-2 {
+            .col-1 {
                 width: 40%;
             }
 
-            /* body {
-                background-color: blue;
-            } */
+            .col-2 {
+                width: 100%;
+            }
+
         }
 
 
-        @media only screen and (min-width : 1000px) {
+        @media screen and (min-width : 1000px) {
             .form_row {
                 width: 65%;
             }
 
+            .col-1 {
+                width: 20%;
+            }
+
             .col-2 {
                 width: 40%;
             }
 
-            /* body {
-                background-color: rgb(7, 211, 146);
-            } */
         }
 
-        @media only screen and (min-width : 1024px) {
+        @media screen and (min-width : 1024px) {
             .form_row {
                 width: 50%;
             }
 
+            .col-1 {
+                width: 20%;
+            }
+
             .col-2 {
                 width: 40%;
             }
 
-            /* body {
-                background-color: rgb(7, 211, 146);
-            } */
         }
 
-        @media only screen and (min-width : 1520px) {
+        @media screen and (min-width : 1520px) {
             .form_row {
                 width: 40%;
             }
 
+            .col-1 {
+                width: 20%;
+            }
+
             .col-2 {
                 width: 40%;
             }
 
-            /* body {
-                background-color: rgb(7, 211, 146);
-            } */
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <form action="" class="form_row" name="frmEmail">
+        <form action="" class="form_row" name="frmPaciente" id="frmPaciente">
             <div class="row">
                 <div class="col-5">
                     <h2>Cadastro de Paciente</h2>
@@ -202,85 +268,202 @@
                     <label for="nome">Nome</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" name="nome" id="nome">
+                    <input type="text" name="nome" id="nome" autocomplete="off">
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
-                    <label for="sobreNome">Sobre Nome</label>
+                    <label for="dataNascimento">Data de Nascimento</label>
                 </div>
+                <div class="col-1">
+                    <input type="date" name="dataNascimento" id="dataNascimento">
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-5">
-                    <input type="text" name="sobreNome" id="sobreNome">
+                    <fieldset>
+                        <legend>Gênero</legend>
+                        <input type="radio" id="homem" name="genero" value="1">
+                        <label for="homem">Masculino</label><br>
+                        <input type="radio" id="mulher" name="genero" value="2">
+                        <label for="mulher">Feminino</label><br>
+                        <input type="radio" id="outro" name="genero" value="3">
+                        <label for="outro">Outro</label>
+                    </fieldset>
                 </div>
             </div>
             <div class="row">
                 <div class="col-1">
-                    <label for="sus">SUS</label>
+                    <label for="sus">Cartão SUS</label>
                 </div>
                 <div class="col-3">
-                    <input type="number" name="sus" id="sus">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-1">
-                    <label for="email">Email</label>
-                </div>
-                <div class="col-4">
-                    <input type="email" name="email" id="email">
+                    <input type="number" name="cartaoSUS" id="cartaoSUS" placeholder="000000000000000"
+                        autocomplete="off">
                 </div>
             </div>
             <div class="row">
                 <div class="col-5">
-                    <input type="button" value="Confirmar">
+                    <fieldset>
+                        <legend>Agendamento Fixo</legend>
+                        <input type="radio" id="Sim" name="agendamentoFixo" value="1">
+                        <label for="Sim">Sim</label><br>
+                        <input type="radio" id="Não" name="agendamentoFixo" value="2" checked>
+                        <label for="Não">Não</label>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <label for="telefone">Telefone</label>
+                </div>
+                <div class="col-2">
+                    <input type="text" name="telefone" id="telefone" placeholder="+55(00) 00000-0000"
+                        autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <label for="rua">Rua</label>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="rua" id="rua" autocomplete="off">
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-1">
+                    <label for="numero">Número</label>
+                </div>
+                <div class="col-1">
+                    <input type="number" name="numero" id="numero">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-1">
+                    <label for="complemento">Complemento</label>
+                </div>
+                <div class="col-4">
+                    <input type="text" name="complemento" id="complemento" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-2">
+                    <label for="pontoReferencia">Ponto de Referência</label>
+                </div>
+                <div class="col-4">
+                    <input type="text" name="pontoReferencia" id="pontoReferencia" autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <input type="submit" value="Confirmar">
+                </div>
+            </div>
         </form>
     </div>
-
-    <script>
-        //  Immediately-Invoked Function Expression (IIFE)
-        ; ((document) => {
-
-            // document.getElementById("nome").addEventListener("beforeinput", event => {
-            //     console.log("value:", event.target.value);
-            // });
-            let charTyped = event.target.value;
-            // let letterRegex = /[a-zA-Z._^%$#!~@,-\s\b`&]+/;
-            // let letterRegex = /^[a-zA-Z\s\b]*$/;
-            let letterRegex = /^[a-zA-Z\u00C0-\u00FF\s\b]*$/;
-
-            document.getElementById("nome").addEventListener("input", event => {
-
-                if (!letterRegex.test(charTyped)) {
-                    event.target.value = charTyped.slice(0, -1);
-                }
-            });
-
-            document.getElementById("sus").addEventListener('input', e => {
-
-                let value = e.target.value;
-
-                if (value.length > 4)
-                    e.target.value = value.slice(0, 4);
-            });
-
-            document.getElementById("email").addEventListener('click', e => {
-                console.log(`email:${email}`)
-            });
-
-        })(document)
-
-        // function isNumber(evt) {
-        //     evt = (evt) ? evt : window.event;
-        //     var charCode = (evt.which) ? evt.which : evt.keyCode;
-        //     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        //         return false;
-        //     }
-        //     return true;
-        // }
-    </script>
-
 </body>
 
 </html>
+<script>
+    const lettersAccents = /[^A-Za-z\u00C0-\u00FF\s\b]/g;
+
+    const letterNumbersAccents = /[^A-Za-z0-9\u00C0-\u00FF._-\s\b]/g;
+
+    function maskPhone(text) {
+
+        const cleanText = text.replace(/\D/g, "");
+
+        const numbers = (cleanText.substring(0, 2) === "55") ? cleanText.substring(2, 13).split("") : cleanText.split("");
+
+        let formatted = `+55(${numbers.slice(0, 2).join("")})`;
+
+        if (numbers.length > 2)
+            formatted += ` ${numbers.slice(2, 7).join("")}`;
+
+        if (numbers.length > 7)
+            formatted += `-${numbers.slice(7, 13).join("")}`;
+
+        return formatted;
+    }
+
+    function replaceCharacter(text, regex) {
+        return text.replace(regex, "");
+    }
+
+    function maximumCharacters(text, size) {
+        return (text.length > size) ? text.slice(0, size) : text;
+    }
+
+    //  Immediately-Invoked Function Expression (IIFE)
+    ; ((document, window, globalObjects) => {
+
+        const [lettersAccents, letterNumbersAccents, maskPhone, replaceCharacter, maximumCharacters] = globalObjects;
+
+        const nome = document.getElementById("nome");
+
+        const telefone = document.getElementById("telefone");
+
+        const cartaoSUS = document.getElementById("cartaoSUS");
+
+        const rua = document.getElementById("rua");
+
+        const numero = document.getElementById("numero");
+
+        const complemento = document.getElementById("complemento")
+
+        const pontoReferencia = document.getElementById("pontoReferencia")
+
+        nome.focus();
+
+        nome.addEventListener("input", event => {
+
+            event.target.value = maximumCharacters(event.target.value, 50);
+
+            event.target.value = replaceCharacter(event.target.value, lettersAccents);
+
+        });
+
+        telefone.addEventListener("input", event => {
+
+            if (event.inputType === "insertText") {
+                event.target.value = maskPhone(event.target.value)
+            }
+        });
+
+        cartaoSUS.addEventListener('input', event => event.target.value = maximumCharacters(event.target.value, 15));
+
+        rua.addEventListener("input", event => {
+
+            event.target.value = maximumCharacters(event.target.value, 50);
+
+            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
+
+        });
+
+        numero.addEventListener("input", event => event.target.value = maximumCharacters(event.target.value, 5));
+
+        complemento.addEventListener("input", event => {
+
+            event.target.value = maximumCharacters(event.target.value, 40);
+
+            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
+
+        });
+
+        pontoReferencia.addEventListener("input", event => {
+
+            event.target.value = maximumCharacters(event.target.value, 40);
+
+            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
+
+        });
+
+        window.addEventListener('beforeunload', event => {
+            console.log("Dispara ao sair de pagina");
+        });
+
+    })(document, window, [lettersAccents, letterNumbersAccents, maskPhone, replaceCharacter, maximumCharacters])
+
+</script>

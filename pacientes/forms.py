@@ -32,6 +32,7 @@ class PacienteForm(forms.ModelForm):
                 "placeholder": "olá papai",
                 "name": "nome",
                 "id": "nome",
+                "class": "",
             }
         ),
     )
