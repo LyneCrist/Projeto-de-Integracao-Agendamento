@@ -11,30 +11,30 @@ Cadastro Paciente
             <h1>Novo Paciente</h1>
         </div>
     </div>
-    
+
     {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
-    
+
     {{FIELDSET_LEGENDS}}
     {% for field in form %}
-    
+
     <div class="fieldWrapper">
         {% if field.name in FIELDSET_LEGENDS %}
-            
-            <fieldset>
-                
-                <legend>{{ field.label_tag }}</legend>
-                {{ field }}
-            </fieldset>
-        {% else %}
-            {{ field.label_tag }}
+
+        <fieldset>
+
+            <legend>{{ field.label_tag }}</legend>
             {{ field }}
+        </fieldset>
+        {% else %}
+        {{ field.label_tag }}
+        {{ field }}
         {% endif %}
-            {{ field.errors }}
+        {{ field.errors }}
 
     </div>
-    
+
     {% endfor %}
-    
+
     <div class="continue-button">
         <input type="submit" value="Confirmar">
     </div>
