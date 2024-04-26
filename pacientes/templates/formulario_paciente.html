@@ -1,84 +1,52 @@
 {% extends "base.html" %}
+{% load poll_extras %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'css/patient-form.css' %}">
+{% endblock css %}
 {% block title %}
-Cadastro Paciente
+    Cadastro Paciente
 {% endblock title %}
 {% block content %}
-<div class="form">
-
-    <form action="{% url 'cadastra_paciente' %}" method="POST">
+    <form action="{% url 'cadastra_paciente' %}"
+          method="post"
+          class="form_row"
+          name="frmPaciente"
+          id="frmPaciente">
         {% csrf_token %}
-
-        <div class="form-header">
-            <div class="title">
-                <h1>Novo Paciente</h1>
+        <div class="row">
+            <div class="col-5">
+                <h2>Cadastro de Paciente</h2>
             </div>
         </div>
-
-        <div class="input-group">
-            <div class="input-box">
-                <label for="nome">Primeiro Nome</label>
-                <input id="nome" type="text" name="nome" placeholder="Digite seu primeiro nome" required="">
-            </div>
-
-            <div class="input-box">
-                <label for="sobreNome">Sobrenome</label>
-                <input id="sobreNome" type="text" name="sobreNome" placeholder="Digite seu sobrenome" required="">
-            </div>
-            <div class="input-box">
-                <label for="email">SUS</label>
-                <input id="email" type="text" name="email" placeholder="Digite seu SUS" required="">
-            </div>
-
-            <div class="input-box">
-                <label for="telefone">Telefone</label>
-                <input id="telefone" type="tel" name="telefone" placeholder="(xx) xxxx-xxxx" required="">
-            </div>
-
-            <div class="input-box">
-                <label for="senha">Endereço</label>
-                <input id="senha" type="text" name="senha" placeholder="Digite seu Endereço" required="">
-            </div>
-
-
-            <div class="input-box">
-                <label for="confirmaSenha">Data do transporte</label>
-                <input id="confirmaSenha" type="text" name="confirmaSenha" placeholder="Data do transporte"
-                    required="">
-            </div>
-
-        </div>
-
-        <div class="gender-inputs">
-            <div class="gender-title">
-                <h6>Gênero</h6>
-            </div>
-
-            <div class="gender-group">
-                <div class="gender-input">
-                    <input id="feminimo" type="radio" name="genero">
-                    <label for="feminimo">Feminino</label>
+        {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
+        {% for field in form %}
+            {% if field.name in FIELDSET_LEGENDS %}
+                <div class="row">
+                    <fieldset>
+                        <legend>{{ field.label_tag }}</legend>
+                        {{ field }}
+                    </fieldset>
                 </div>
-
-                <div class="gender-input">
-                    <input id="masculino" type="radio" name="genero">
-                    <label for="masculino">Masculino</label>
+            {% else %}
+                <div class="row">
+                    <div class="{{ field|set_column_label }}">{{ field.label_tag }}</div>
                 </div>
-
-                <div class="gender-input">
-                    <input id="outro" type="radio" name="genero">
-                    <label for="outro">Outros</label>
+                <div class="row">
+                    <div class="{{ field|set_column_input }}">{{ field }}</div>
                 </div>
-
-                <div class="gender-input">
-                    <input id="semGenero" type="radio" name="genero">
-                    <label for="semGenero">Prefiro não dizer</label>
-                </div>
+            {% endif %}
+            {{ field.errors }}
+        {% endfor %}
+        <div class="row">
+            <div class="col-5">
+                <input type="submit" value="Confirmar">
             </div>
-        </div>
-
-        <div class="continue-button">
-            <button type="submit">Confirmar</button>
         </div>
     </form>
-</div>
 {% endblock content %}
+{% block script_client %}
+    <script src="{% static 'js/patient-form.js' %}"></script>
+{% endblock script_client %}

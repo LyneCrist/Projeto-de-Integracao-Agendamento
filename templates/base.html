@@ -12,7 +12,14 @@
         Master
         {% endblock title %}
     </title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+
+    {% block css %}
+    {% endblock %}
+
+    <script src="{% static 'js/util.js' %}"></script>
 </head>
 
 <body>
@@ -42,3 +49,5 @@
 </body>
 
 </html>
+{% block script_client %}
+{% endblock script_client %}
