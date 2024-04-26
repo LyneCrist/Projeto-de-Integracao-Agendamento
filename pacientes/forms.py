@@ -1,6 +1,6 @@
 from tkinter import Widget
 from django import forms
-from .utils import GENERO_CHOICES
+from .utils import AGENDAMENTO_FIXO_CHOICES, GENERO_CHOICES
 from .models import Paciente
 from django.core.validators import (
     MinLengthValidator,
@@ -11,28 +11,128 @@ from django.core.validators import (
 
 class PacienteForm(forms.ModelForm):
 
+    # nome = forms.CharField(
+    #     validators=[
+    #         MinLengthValidator(
+    #             3, "Limite mínimo de 3 caracteres permitido para campo Nome"
+    #         ),
+    #         MaxLengthValidator(
+    #             30,
+    #             message="Limite máximo de 30 caracteres permitido para campo Nome",
+    #         ),
+    #         RegexValidator(
+    #             regex=r"^([a-zA-Zà-úÀ-Ú]\s)+$",
+    #             message="Informe apenas texto para campo Nome",
+    #         ),
+    #     ],
+    #     required=False,
+    #     max_length=30,
+    #     widget=forms.TextInput(
+    #         attrs={
+    #             "placeholder": "olá papai",
+    #             "name": "nome",
+    #             "id": "nome",
+    #             "class": "",
+    #         }
+    #     ),
+    # )
+
     nome = forms.CharField(
-        validators=[
-            MinLengthValidator(
-                3, "Limite mínimo de 3 caracteres permitido para campo Nome"
-            ),
-            MaxLengthValidator(
-                30,
-                message="Limite máximo de 30 caracteres permitido para campo Nome",
-            ),
-            RegexValidator(
-                regex=r"^([a-zA-Zà-úÀ-Ú]\s)+$",
-                message="Informe apenas texto para campo Nome",
-            ),
-        ],
-        required=False,
+        label="Nome",
         max_length=30,
+        required=False,
+        widget=forms.TextInput(
+            attrs={"name": "nome", "id": "nome", "autocomplete": "off"}
+        ),
+    )
+
+    data_de_nascimento = forms.DateField(
+        label="Data de Nascimento",
+        input_formats=("%m/%d/%Y"),
+        required=False,
+        widget=forms.DateInput(
+            attrs={
+                "name": "dataNascimento",
+                "id": "dataNascimento",
+                "autocomplete": "off",
+            }
+        ),
+    )
+
+    genero = forms.ChoiceField(
+        required=False,
+        widget=forms.RadioSelect(),
+        choices=GENERO_CHOICES,
+    )
+
+    cartao_sus = forms.IntegerField(
+        label="Cartão SUS",
+        required=False,
+        widget=forms.NumberInput(
+            attrs={
+                "name": "cartaoSUS",
+                "id": "cartaoSUS",
+                "placeholder": "000000000000000",
+                "autocomplete": "off",
+            }
+        ),
+    )
+
+    agendamento_fixo = forms.ChoiceField(
+        label="Agendamento Fixo",
+        required=False,
+        choices=AGENDAMENTO_FIXO_CHOICES,
+        widget=forms.RadioSelect(),
+        initial=2,
+    )
+
+    telefone = forms.CharField(
+        label="Telefone",
+        max_length=30,
+        required=False,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "olá papai",
-                "name": "nome",
-                "id": "nome",
-                "class": "",
+                "name": "telefone",
+                "id": "telefone",
+                "placeholder": "+55(00) 00000-0000",
+                "autocomplete": "off",
+            }
+        ),
+    )
+
+    rua = forms.CharField(
+        label="Rua",
+        max_length=50,
+        required=False,
+        widget=forms.TextInput(
+            attrs={"name": "rua", "id": "rua", "autocomplete": "off"}
+        ),
+    )
+
+    numero = forms.IntegerField(
+        label="Número",
+        required=False,
+        widget=forms.NumberInput(attrs={"name": "numero", "id": "numero"}),
+    )
+
+    complemento = forms.CharField(
+        label="Complemento",
+        max_length=40,
+        required=False,
+        widget=forms.TextInput(
+            attrs={"name": "complemento", "id": "complemento", "autocomplete": "off"}
+        ),
+    )
+
+    ponto_de_referencia = forms.CharField(
+        label="Ponto de Referência",
+        max_length=40,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "name": "pontoReferencia",
+                "id": "pontoReferencia",
+                "autocomplete": "off",
             }
         ),
     )
@@ -253,6 +353,8 @@ class PacienteForm(forms.ModelForm):
 
         exclude = ["status", "data_criacao", "data_alteracao"]
 
+        fieldsets = [("genero", {"fields": ["name", "Genero"], "legend": "Gênero"})]
+
         # fields = {
         #     "nome": forms.CharField(
         #         validators=[
@@ -273,24 +375,67 @@ class PacienteForm(forms.ModelForm):
         #     )
         # }
 
-        widgets = {
-            "nome": forms.TextInput(
-                attrs={
-                    "id": "nome",
-                    "name": "nome",
-                    "placeholder": "* Nome",
-                }
-            ),
-        }
+        # widgets = {
+        #     "nome": forms.TextInput(
+        #         attrs={"id": "nome", "name": "nome", "autocomplete": "off"}
+        #     ),
+        #     "data_de_nascimento": forms.DateInput(
+        #         format=("%m/%d/%Y"),
+        #         attrs={
+        #             "type": "date",
+        #             "id": "dataNascimento",
+        #             "name": "dataNascimento",
+        #             "autocomplete": "off",
+        #         },
+        #     ),
+        #     "genero": forms.RadioSelect(
+        #         attrs={"selected": ""},
+        #         choices=[],
+        #     ),
+        #     "cartao_sus": forms.TextInput(
+        #         attrs={"id": "cartaoSUS", "name": "cartaoSUS", "autocomplete": "off"}
+        #     ),
+        #     "agendamento_fixo": forms.RadioSelect(
+        #         attrs={
+        #             "id": "agendamento_fixo",
+        #             "name": "cartaoSUS",
+        #             "autocomplete": "off",
+        #         },
+        #         choices=[],
+        #     ),
+        #     "telefone": forms.TextInput(
+        #         attrs={"id": "telefone", "name": "telefone", "autocomplete": "off"}
+        #     ),
+        #     "rua": forms.TextInput(
+        #         attrs={"id": "rua", "name": "rua", "autocomplete": "off"}
+        #     ),
+        #     "numero": forms.NumberInput(
+        #         attrs={"id": "numero", "name": "numero", "autocomplete": "off"}
+        #     ),
+        #     "complemento": forms.TextInput(
+        #         attrs={
+        #             "id": "complemento",
+        #             "name": "complemento",
+        #             "autocomplete": "off",
+        #         }
+        #     ),
+        #     "ponto_referencia": forms.TextInput(
+        #         attrs={
+        #             "id": "pontoReferencia",
+        #             "name": "pontoReferencia",
+        #             "autocomplete": "off",
+        #         }
+        #     ),
+        # }
 
-    def clean_nome(self):
+    # def clean_nome(self):
 
-        nome = self.cleaned_data.get("nome")
+    #     nome = self.cleaned_data.get("nome")
 
-        if not nome:
-            raise forms.ValidationError("Campo necessário")
+    #     if not nome:
+    #         raise forms.ValidationError("Campo necessário")
 
-        return nome
+    #     return nome
 
     def clean(self):
 
@@ -298,10 +443,5 @@ class PacienteForm(forms.ModelForm):
 
         nome = cleaned_data.get("nome")
 
-        sobre_nome = cleaned_data.get("sobreNome")
-
         if not nome:
-            raise forms.ValidationError("Campo necessário")
-
-        if not sobre_nome:
             raise forms.ValidationError("Campo necessário")

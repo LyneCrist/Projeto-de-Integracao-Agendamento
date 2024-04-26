@@ -367,9 +367,11 @@
 
 </html>
 <script>
-    const lettersAccents = /[^A-Za-z\u00C0-\u00FF\s\b]/g;
+    "use strict";
 
-    const letterNumbersAccents = /[^A-Za-z0-9\u00C0-\u00FF._-\s\b]/g;
+    const alpha = /[^A-Za-z\u00C0-\u00FF\s\b]/g;
+
+    const alphaNumeric = /[^A-Za-z0-9\u00C0-\u00FF._-\s\b]/g;
 
     function maskPhone(text) {
 
@@ -397,73 +399,79 @@
     }
 
     //  Immediately-Invoked Function Expression (IIFE)
-    ; ((document, window, globalObjects) => {
+    ; (atlas => {
 
-        const [lettersAccents, letterNumbersAccents, maskPhone, replaceCharacter, maximumCharacters] = globalObjects;
+        const name = atlas.document.getElementById("nome");
 
-        const nome = document.getElementById("nome");
+        const phone = atlas.document.getElementById("telefone");
 
-        const telefone = document.getElementById("telefone");
+        const card = atlas.document.getElementById("cartaoSUS");
 
-        const cartaoSUS = document.getElementById("cartaoSUS");
+        const street = atlas.document.getElementById("rua");
 
-        const rua = document.getElementById("rua");
+        const number = atlas.document.getElementById("numero");
 
-        const numero = document.getElementById("numero");
+        const complement = atlas.document.getElementById("complemento")
 
-        const complemento = document.getElementById("complemento")
+        const reference = atlas.document.getElementById("pontoReferencia")
 
-        const pontoReferencia = document.getElementById("pontoReferencia")
+        name.focus();
 
-        nome.focus();
+        name.addEventListener("input", event => {
 
-        nome.addEventListener("input", event => {
+            event.target.value = atlas.maximum(event.target.value, 50);
 
-            event.target.value = maximumCharacters(event.target.value, 50);
-
-            event.target.value = replaceCharacter(event.target.value, lettersAccents);
+            event.target.value = atlas.replace(event.target.value, atlas.alpha);
 
         });
 
-        telefone.addEventListener("input", event => {
+        phone.addEventListener("input", event => {
 
             if (event.inputType === "insertText") {
-                event.target.value = maskPhone(event.target.value)
+                event.target.value = atlas.mask(event.target.value)
             }
         });
 
-        cartaoSUS.addEventListener('input', event => event.target.value = maximumCharacters(event.target.value, 15));
+        card.addEventListener('input', event => event.target.value = atlas.maximum(event.target.value, 15));
 
-        rua.addEventListener("input", event => {
+        street.addEventListener("input", event => {
 
-            event.target.value = maximumCharacters(event.target.value, 50);
+            event.target.value = atlas.maximum(event.target.value, 50);
 
-            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
-
-        });
-
-        numero.addEventListener("input", event => event.target.value = maximumCharacters(event.target.value, 5));
-
-        complemento.addEventListener("input", event => {
-
-            event.target.value = maximumCharacters(event.target.value, 40);
-
-            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
+            event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
 
         });
 
-        pontoReferencia.addEventListener("input", event => {
+        number.addEventListener("input", event => event.target.value = atlas.maximum(event.target.value, 5));
 
-            event.target.value = maximumCharacters(event.target.value, 40);
+        complement.addEventListener("input", event => {
 
-            event.target.value = replaceCharacter(event.target.value, letterNumbersAccents);
+            event.target.value = atlas.maximum(event.target.value, 40);
+
+            event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
 
         });
 
-        window.addEventListener('beforeunload', event => {
-            console.log("Dispara ao sair de pagina");
+        reference.addEventListener("input", event => {
+
+            event.target.value = atlas.maximum(event.target.value, 40);
+
+            event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
+
         });
 
-    })(document, window, [lettersAccents, letterNumbersAccents, maskPhone, replaceCharacter, maximumCharacters])
+        atlas.window.addEventListener('beforeunload', event => {
+            console.log("Atlas sendo encerrado");
+        });
+
+    })({
+        document,
+        window,
+        "alpha": alpha,
+        "alphaNumeric": alphaNumeric,
+        "mask": maskPhone,
+        "replace": replaceCharacter,
+        "maximum": maximumCharacters
+    })
 
 </script>

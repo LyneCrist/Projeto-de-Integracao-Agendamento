@@ -1,5 +1,6 @@
 from click import option
 from django.db import models
+from .utils import AGENDAMENTO_FIXO_CHOICES, GENERO_CHOICES
 
 
 class Paciente(models.Model):
@@ -10,13 +11,19 @@ class Paciente(models.Model):
 
     nome = models.CharField(max_length=60)
     data_de_nascimento = models.DateTimeField()
-    genero = models.IntegerField()
+    genero = models.IntegerField(choices=GENERO_CHOICES)
     cartao_sus = models.CharField(max_length=15, unique=True)
-    telefone = models.CharField(max_length=15)
-    rua = models.CharField(max_length=80)
+
+    agendamento_fixo = models.IntegerField(
+        choices=AGENDAMENTO_FIXO_CHOICES,
+        default=Status.ATIVO,
+    )
+
+    telefone = models.CharField(max_length=18)
+    rua = models.CharField(max_length=50)
     numero = models.IntegerField()
-    complemento = models.CharField(max_length=60)
-    ponto_referencia = models.CharField(max_length=60)
+    complemento = models.CharField(max_length=40)
+    ponto_referencia = models.CharField(max_length=40)
 
     status = models.IntegerField(default=Status.ATIVO)
 
@@ -24,7 +31,7 @@ class Paciente(models.Model):
     data_alteracao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.nome} {self.sobre_nome}"
+        return f"{self.nome}"
 
     class Meta:
         db_table = "pacientes"

@@ -5,19 +5,36 @@ Cadastro Paciente
 {% block content %}
 <form class="form" action="{% url 'cadastra_paciente' %}" method="post">
     {% csrf_token %}
+
     <div class="form-header">
         <div class="title">
             <h1>Novo Paciente</h1>
         </div>
     </div>
+    
     {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
+    
+    {{FIELDSET_LEGENDS}}
     {% for field in form %}
+    
     <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }}
-        {{ field }}
+        {% if field.name in FIELDSET_LEGENDS %}
+            
+            <fieldset>
+                
+                <legend>{{ field.label_tag }}</legend>
+                {{ field }}
+            </fieldset>
+        {% else %}
+            {{ field.label_tag }}
+            {{ field }}
+        {% endif %}
+            {{ field.errors }}
+
     </div>
+    
     {% endfor %}
+    
     <div class="continue-button">
         <input type="submit" value="Confirmar">
     </div>
