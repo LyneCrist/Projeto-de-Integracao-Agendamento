@@ -52,6 +52,7 @@ class PacienteForm(forms.ModelForm):
         required=False,
         widget=forms.DateInput(
             attrs={
+                "type": "date",
                 "name": "dataNascimento",
                 "id": "dataNascimento",
                 "autocomplete": "off",

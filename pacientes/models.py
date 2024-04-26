@@ -10,7 +10,7 @@ class Paciente(models.Model):
         INATIVO = 2, "Inativo"
 
     nome = models.CharField(max_length=60)
-    data_de_nascimento = models.DateTimeField()
+    data_de_nascimento = models.DateField()
     genero = models.IntegerField(choices=GENERO_CHOICES)
     cartao_sus = models.CharField(max_length=15, unique=True)
 

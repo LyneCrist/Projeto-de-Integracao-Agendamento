@@ -1,42 +1,52 @@
 {% extends "base.html" %}
+{% load poll_extras %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'css/patient-form.css' %}">
+{% endblock css %}
 {% block title %}
-Cadastro Paciente
+    Cadastro Paciente
 {% endblock title %}
 {% block content %}
-<form class="form" action="{% url 'cadastra_paciente' %}" method="post">
-    {% csrf_token %}
-
-    <div class="form-header">
-        <div class="title">
-            <h1>Novo Paciente</h1>
+    <form action="{% url 'cadastra_paciente' %}"
+          method="post"
+          class="form_row"
+          name="frmPaciente"
+          id="frmPaciente">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-5">
+                <h2>Cadastro de Paciente</h2>
+            </div>
         </div>
-    </div>
-
-    {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
-
-    {{FIELDSET_LEGENDS}}
-    {% for field in form %}
-
-    <div class="fieldWrapper">
-        {% if field.name in FIELDSET_LEGENDS %}
-
-        <fieldset>
-
-            <legend>{{ field.label_tag }}</legend>
-            {{ field }}
-        </fieldset>
-        {% else %}
-        {{ field.label_tag }}
-        {{ field }}
-        {% endif %}
-        {{ field.errors }}
-
-    </div>
-
-    {% endfor %}
-
-    <div class="continue-button">
-        <input type="submit" value="Confirmar">
-    </div>
-</form>
+        {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
+        {% for field in form %}
+            {% if field.name in FIELDSET_LEGENDS %}
+                <div class="row">
+                    <fieldset>
+                        <legend>{{ field.label_tag }}</legend>
+                        {{ field }}
+                    </fieldset>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="{{ field|set_column_label }}">{{ field.label_tag }}</div>
+                </div>
+                <div class="row">
+                    <div class="{{ field|set_column_input }}">{{ field }}</div>
+                </div>
+            {% endif %}
+            {{ field.errors }}
+        {% endfor %}
+        <div class="row">
+            <div class="col-5">
+                <input type="submit" value="Confirmar">
+            </div>
+        </div>
+    </form>
 {% endblock content %}
+{% block script_client %}
+    <script src="{% static 'js/patient-form.js' %}"></script>
+{% endblock script_client %}
