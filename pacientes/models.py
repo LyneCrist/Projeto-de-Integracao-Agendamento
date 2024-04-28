@@ -9,10 +9,17 @@ class Paciente(models.Model):
         ATIVO = 1, "Ativo"
         INATIVO = 2, "Inativo"
 
-    nome = models.CharField(max_length=60)
-    data_de_nascimento = models.DateField()
-    genero = models.IntegerField(choices=GENERO_CHOICES)
-    cartao_sus = models.CharField(max_length=15, unique=True)
+    nome = models.CharField(max_length=60, null=False, blank=False)
+
+    data_de_nascimento = models.DateField(null=True)
+
+    genero = models.IntegerField(choices=GENERO_CHOICES, null=True)
+
+    # cartao_sus = models.CharField(
+    #     max_length=15, unique=True, blank=False, null=False, default=None
+    # )
+
+    cartao_sus = models.CharField(max_length=15, unique=True, null=True)
 
     agendamento_fixo = models.IntegerField(
         choices=AGENDAMENTO_FIXO_CHOICES,
@@ -21,13 +28,13 @@ class Paciente(models.Model):
 
     telefone = models.CharField(max_length=18)
     rua = models.CharField(max_length=50)
-    numero = models.IntegerField()
+    numero = models.IntegerField(null=True)
     complemento = models.CharField(max_length=40)
     ponto_referencia = models.CharField(max_length=40)
 
     status = models.IntegerField(default=Status.ATIVO)
 
-    data_criacao = models.DateTimeField(auto_created=True)
+    data_criacao = models.DateTimeField(auto_now_add=True)
     data_alteracao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
