@@ -46,20 +46,33 @@ class PacienteForm(forms.ModelForm):
         ),
     )
 
+    # data_de_nascimento = forms.DateField(
+    #     label="Data de Nascimento",
+    #     input_formats=("%m/%d/%Y"),
+    #     required=False,
+    #     widget=forms.DateInput(
+    #         attrs={
+    #             "type": "date",
+    #             "name": "dataNascimento",
+    #             "id": "dataNascimento",
+    #             "autocomplete": "off",
+    #         }
+    #     ),
+    # )
     data_de_nascimento = forms.DateField(
         label="Data de Nascimento",
-        input_formats=("%m/%d/%Y"),
         required=False,
+        input_formats=["%Y-%m-%d"],
         widget=forms.DateInput(
+            format="%Y-%m-%d",
             attrs={
                 "type": "date",
                 "name": "dataNascimento",
                 "id": "dataNascimento",
                 "autocomplete": "off",
-            }
+            },
         ),
     )
-
     genero = forms.ChoiceField(
         required=False,
         widget=forms.RadioSelect(),
@@ -125,7 +138,7 @@ class PacienteForm(forms.ModelForm):
         ),
     )
 
-    ponto_de_referencia = forms.CharField(
+    ponto_referencia = forms.CharField(
         label="Ponto de Referência",
         max_length=40,
         required=False,
@@ -349,12 +362,23 @@ class PacienteForm(forms.ModelForm):
 
         model = Paciente
 
-        # fields = "__all__"
-        fields = ["nome"]
+        fields = "__all__"
+        # fields = [
+        #     "nome",
+        #     "data_de_nascimento",
+        #     "genero",
+        #     "cartao_sus",
+        #     "agendamento_fixo",
+        #     "telefone",
+        #     "rua",
+        #     "numero",
+        #     "complemento",
+        #     "ponto_referencia",
+        # ]
 
         exclude = ["status", "data_criacao", "data_alteracao"]
 
-        fieldsets = [("genero", {"fields": ["name", "Genero"], "legend": "Gênero"})]
+        # fieldsets = [("genero", {"fields": ["name", "Genero"], "legend": "Gênero"})]
 
         # fields = {
         #     "nome": forms.CharField(

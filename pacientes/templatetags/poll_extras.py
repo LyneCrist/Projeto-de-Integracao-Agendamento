@@ -15,7 +15,7 @@ def set_column_label(field: BoundField) -> str:
         "rua": "col-1",
         "numero": "col-1",
         "complemento": "col-1",
-        "ponto_de_referencia": "col-2",
+        "ponto_referencia": "col-2",
     }
 
     print(f"{type(field)} {fields[field.name]} {field.name}")
@@ -36,7 +36,7 @@ def set_column_input(field: BoundField) -> str:
         "rua": "col-5",
         "numero": "col-1",
         "complemento": "col-4",
-        "ponto_de_referencia": "col-4",
+        "ponto_referencia": "col-4",
     }
 
     return fields[field.name]
