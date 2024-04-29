@@ -7,6 +7,7 @@ from django.core.validators import (
     MaxLengthValidator,
     RegexValidator,
 )
+from datetime import datetime
 
 
 class PacienteForm(forms.ModelForm):
@@ -363,110 +364,33 @@ class PacienteForm(forms.ModelForm):
         model = Paciente
 
         fields = "__all__"
-        # fields = [
-        #     "nome",
-        #     "data_de_nascimento",
-        #     "genero",
-        #     "cartao_sus",
-        #     "agendamento_fixo",
-        #     "telefone",
-        #     "rua",
-        #     "numero",
-        #     "complemento",
-        #     "ponto_referencia",
-        # ]
 
         exclude = ["status", "data_criacao", "data_alteracao"]
 
-        # fieldsets = [("genero", {"fields": ["name", "Genero"], "legend": "Gênero"})]
-
-        # fields = {
-        #     "nome": forms.CharField(
-        #         validators=[
-        #             MinLengthValidator(
-        #                 3, "Limite mínimo de 3 caracteres permitido para campo Nome"
-        #             ),
-        #             MaxLengthValidator(
-        #                 30,
-        #                 message="Limite máximo de 30 caracteres permitido para campo Nome",
-        #             ),
-        #             RegexValidator(
-        #                 regex=r"^([a-zA-Zà-úÀ-Ú]\s)+$",
-        #                 message="Informe apenas texto para campo Nome",
-        #             ),
-        #         ],
-        #         max_length=100,
-        #         help_text="100 characters max.",
-        #     )
-        # }
-
-        # widgets = {
-        #     "nome": forms.TextInput(
-        #         attrs={"id": "nome", "name": "nome", "autocomplete": "off"}
-        #     ),
-        #     "data_de_nascimento": forms.DateInput(
-        #         format=("%m/%d/%Y"),
-        #         attrs={
-        #             "type": "date",
-        #             "id": "dataNascimento",
-        #             "name": "dataNascimento",
-        #             "autocomplete": "off",
-        #         },
-        #     ),
-        #     "genero": forms.RadioSelect(
-        #         attrs={"selected": ""},
-        #         choices=[],
-        #     ),
-        #     "cartao_sus": forms.TextInput(
-        #         attrs={"id": "cartaoSUS", "name": "cartaoSUS", "autocomplete": "off"}
-        #     ),
-        #     "agendamento_fixo": forms.RadioSelect(
-        #         attrs={
-        #             "id": "agendamento_fixo",
-        #             "name": "cartaoSUS",
-        #             "autocomplete": "off",
-        #         },
-        #         choices=[],
-        #     ),
-        #     "telefone": forms.TextInput(
-        #         attrs={"id": "telefone", "name": "telefone", "autocomplete": "off"}
-        #     ),
-        #     "rua": forms.TextInput(
-        #         attrs={"id": "rua", "name": "rua", "autocomplete": "off"}
-        #     ),
-        #     "numero": forms.NumberInput(
-        #         attrs={"id": "numero", "name": "numero", "autocomplete": "off"}
-        #     ),
-        #     "complemento": forms.TextInput(
-        #         attrs={
-        #             "id": "complemento",
-        #             "name": "complemento",
-        #             "autocomplete": "off",
-        #         }
-        #     ),
-        #     "ponto_referencia": forms.TextInput(
-        #         attrs={
-        #             "id": "pontoReferencia",
-        #             "name": "pontoReferencia",
-        #             "autocomplete": "off",
-        #         }
-        #     ),
-        # }
-
-    # def clean_nome(self):
-
-    #     nome = self.cleaned_data.get("nome")
-
-    #     if not nome:
-    #         raise forms.ValidationError("Campo necessário")
-
-    #     return nome
-
     def clean(self):
 
-        cleaned_data = super().clean()
+        super().clean()
 
-        nome = cleaned_data.get("nome")
+        nome = self.cleaned_data.get("nome")
+
+        data_de_nascimento = self.cleaned_data.get("data_de_nascimento")
 
         if not nome:
+            raise forms.ValidationError({"nome": "Campo necessário"})
+
+        if len(nome) < 5 or len(nome) > 60:
+            raise forms.ValidationError(
+                {"nome": "Campo deve conter de 4 a 60 caracteres"}
+            )
+
+            # raise forms.ValidationError("deve conter de 4 a 60 caracteres")
+
+        if not data_de_nascimento:
             raise forms.ValidationError("Campo necessário")
+
+        ano = int(datetime.now().year - (data_de_nascimento.year))
+
+        if ano == -1 or ano > 100:
+            raise forms.ValidationError("Informe uma data válida")
+
+        return self.cleaned_data

@@ -26,21 +26,25 @@ def cadastrar(request):
 
     if request.method == "POST":
 
-        # print(request.POST)
+        print(request.POST)
+
+        print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
         context["form"] = PacienteForm(request.POST)
 
         if context["form"].is_valid():
             try:
 
-                # print(context["form"].cleaned_data)
-                context["form"].save()
-                # print(context["form"].cleaned_data)
+                print(context["form"].cleaned_data)
+                # context["form"].save()
 
                 return redirect("cadastra_paciente")
             except:
 
                 return render(request, "formulario_paciente", context)
+
+        print("---------------")
+        print(context["form"].errors)
 
         context["erros"] = context["form"].errors.as_data()
 
