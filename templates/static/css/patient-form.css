@@ -9,6 +9,18 @@
     text-align: center;
 }
 
+.form_row .error {
+    color: red;
+    font-weight: bold;
+}
+
+.form_row .error ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-style: italic;
+}
+
 .form_row input:focus {
     outline: none;
 }

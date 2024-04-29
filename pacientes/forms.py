@@ -376,17 +376,24 @@ class PacienteForm(forms.ModelForm):
         data_de_nascimento = self.cleaned_data.get("data_de_nascimento")
 
         if not nome:
-            raise forms.ValidationError({"nome": "Campo necessário"})
+            raise forms.ValidationError(
+                {"nome": "Campo obrigatório, deve conter de 5 a 60 caracteres"}
+            )
 
         if len(nome) < 5 or len(nome) > 60:
             raise forms.ValidationError(
-                {"nome": "Campo deve conter de 4 a 60 caracteres"}
+                {"nome": "Campo deve conter de 5 a 60 caracteres"}
+            )
+
+        if not nome:
+            raise forms.ValidationError(
+                {"nome": "Campo inválido, informe apenas texto"}
             )
 
             # raise forms.ValidationError("deve conter de 4 a 60 caracteres")
 
         if not data_de_nascimento:
-            raise forms.ValidationError("Campo necessário")
+            raise forms.ValidationError("Campo obrigatório")
 
         ano = int(datetime.now().year - (data_de_nascimento.year))
 
