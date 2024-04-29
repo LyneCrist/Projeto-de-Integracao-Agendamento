@@ -5,7 +5,9 @@ register = template.Library()
 
 
 @register.filter(name="set_column_label")
-def set_column_label(field: BoundField) -> str:
+def set_column_label(field: BoundField, arg) -> str:
+
+    print("arg>>>", arg)
 
     fields = {
         "nome": "col-1",
@@ -18,7 +20,7 @@ def set_column_label(field: BoundField) -> str:
         "ponto_referencia": "col-2",
     }
 
-    print(f"{type(field)} {fields[field.name]} {field.name}")
+    # print(f"{type(field)} {fields[field.name]} {field.name}")
 
     return fields[field.name]
 

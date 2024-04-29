@@ -31,13 +31,15 @@
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="{{ field|set_column_label }}">{{ field.label_tag }}</div>
+                    <div class="{{ field|set_column_label:field.errors }}">{{ field.errors|yesno:"* ," }}{{ field.label_tag }}</div>
                 </div>
                 <div class="row">
                     <div class="{{ field|set_column_input }}">{{ field }}</div>
                 </div>
+                <div class="row">
+                    <div>{{ field.errors }}</div>
+                </div>
             {% endif %}
-            {{ field.errors }}
         {% endfor %}
         <div class="row">
             <div class="col-5">
