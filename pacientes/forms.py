@@ -2,6 +2,8 @@ from tkinter import Widget
 from django import forms
 from .utils import AGENDAMENTO_FIXO_CHOICES, GENERO_CHOICES
 from .models import Paciente
+import re
+
 from django.core.validators import (
     MinLengthValidator,
     MaxLengthValidator,
@@ -371,10 +373,29 @@ class PacienteForm(forms.ModelForm):
 
         super().clean()
 
+        valid_alpha = "[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\\-_\\s]+$"
+
+        valid_alpha_numeric = "[A-Za-z0-9_À-ÿ.-_\\s]+$"
+
         nome = self.cleaned_data.get("nome")
 
         data_de_nascimento = self.cleaned_data.get("data_de_nascimento")
 
+        cartao_sus = self.cleaned_data.get("cartao_sus")
+
+        agendamento_fixo = self.cleaned_data.get("agendamento_fixo")
+
+        telefone = self.cleaned_data.get("telefone")
+
+        rua = self.cleaned_data.get("rua")
+
+        numero = self.cleaned_data.get("numero")
+
+        complemento = self.cleaned_data.get("complemento")
+
+        ponto_referencia = self.cleaned_data.get("ponto_referencia")
+
+        # NOME
         if not nome:
             raise forms.ValidationError(
                 {"nome": "Campo obrigatório, deve conter de 5 a 60 caracteres"}
@@ -385,19 +406,29 @@ class PacienteForm(forms.ModelForm):
                 {"nome": "Campo deve conter de 5 a 60 caracteres"}
             )
 
-        if not nome:
+        if re.match(valid_alpha, nome) is None:
             raise forms.ValidationError(
                 {"nome": "Campo inválido, informe apenas texto"}
             )
 
-            # raise forms.ValidationError("deve conter de 4 a 60 caracteres")
-
+        # DATA_DE_NASCIMENTO
         if not data_de_nascimento:
-            raise forms.ValidationError("Campo obrigatório")
+            raise forms.ValidationError({"data_de_nascimento": "Campo obrigatório"})
 
         ano = int(datetime.now().year - (data_de_nascimento.year))
 
         if ano == -1 or ano > 100:
-            raise forms.ValidationError("Informe uma data válida")
+            raise forms.ValidationError(
+                {"data_de_nascimento": "Informe uma data válida"}
+            )
+
+        # CARTAO_SUS
+        if not cartao_sus:
+            raise forms.ValidationError({"cartao_sus": "Campo obrigatório"})
+
+        if not cartao_sus:
+            raise forms.ValidationError({"cartao_sus": "Campo obrigatório"})
+
+        # CARTAO_SUS
 
         return self.cleaned_data
