@@ -5,9 +5,7 @@ register = template.Library()
 
 
 @register.filter(name="set_column_label")
-def set_column_label(field: BoundField, arg) -> str:
-
-    print("arg>>>", arg)
+def set_column_label(field: BoundField) -> str:
 
     fields = {
         "nome": "col-1",
