@@ -17,20 +17,17 @@ class Paciente(models.Model):
 
     cartao_sus = models.CharField(max_length=15, unique=True)
 
-    agendamento_fixo = models.IntegerField(
-        choices=AGENDAMENTO_FIXO_CHOICES,
-        default=Status.ATIVO,
-    )
+    agendamento_fixo = models.IntegerField(choices=AGENDAMENTO_FIXO_CHOICES)
 
-    telefone = models.CharField(max_length=18)
+    telefone = models.CharField(max_length=13)
 
-    rua = models.CharField(max_length=50)
+    rua = models.CharField(max_length=60)
 
-    numero = models.IntegerField()
+    numero = models.CharField(max_length=7)
 
-    complemento = models.CharField(max_length=40)
+    complemento = models.CharField(max_length=60)
 
-    ponto_referencia = models.CharField(max_length=40)
+    ponto_referencia = models.CharField(max_length=60)
 
     status = models.IntegerField(default=Status.ATIVO)
 

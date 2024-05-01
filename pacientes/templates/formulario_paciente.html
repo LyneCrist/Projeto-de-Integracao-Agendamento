@@ -25,23 +25,21 @@
             {% if field.name in FIELDSET_LEGENDS %}
                 <div class="row">
                     <fieldset>
-                        <legend>{{ field.label_tag }}</legend>
+                        <legend class="{{ field.errors|yesno:"error," }}">{{ field.errors|yesno:"* ," }}{{ field.label_tag }}</legend>
                         {{ field }}
                     </fieldset>
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="{{ field|set_column_label }} {{ field.errors|yesno:"error," }}">
-                        {{ field.errors|yesno:"* ," }}{{ field.label_tag }}
-                    </div>
+                    <div class="col-5 {{ field.errors|yesno:"error," }}">{{ field.errors|yesno:"* ," }}{{ field.label_tag }}</div>
                 </div>
                 <div class="row">
                     <div class="{{ field|set_column_input }}">{{ field }}</div>
                 </div>
-                <div class="row">
-                    <div class="col-5 error">{{ field.errors }}</div>
-                </div>
             {% endif %}
+            <div class="row">
+                <div class="col-5 error">{{ field.errors }}</div>
+            </div>
         {% endfor %}
         <div class="row">
             <div class="col-5">

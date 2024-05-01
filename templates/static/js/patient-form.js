@@ -1,62 +1,72 @@
 //  Immediately-Invoked Function Expression (IIFE)
 ; (atlas => {
 
-    const name = atlas.document.getElementById("nome");
+    const nome = atlas.document.getElementById("nome");
 
-    const phone = atlas.document.getElementById("telefone");
+    const telefone = atlas.document.getElementById("telefone");
 
-    const card = atlas.document.getElementById("cartaoSUS");
+    const cartaoSUS = atlas.document.getElementById("cartaoSUS");
 
-    const street = atlas.document.getElementById("rua");
+    const rua = atlas.document.getElementById("rua");
 
-    const number = atlas.document.getElementById("numero");
+    const numero = atlas.document.getElementById("numero");
 
-    const complement = atlas.document.getElementById("complemento")
+    const complemento = atlas.document.getElementById("complemento")
 
-    const reference = atlas.document.getElementById("pontoReferencia")
+    const pontoReferencia = atlas.document.getElementById("pontoReferencia")
 
-    name.focus();
+    nome.focus();
 
-    name.addEventListener("input", event => {
+    nome.addEventListener("input", event => {
 
         event.target.value = atlas.maximum(event.target.value, 50);
 
-        event.target.value = atlas.replace(event.target.value, atlas.alpha);
+        event.target.value = atlas.replace(event.target.value, atlas.isAlpha);
 
     });
 
-    phone.addEventListener("input", event => {
+    telefone.addEventListener("input", event => {
 
         if (event.inputType === "insertText") {
             event.target.value = atlas.mask(event.target.value)
         }
     });
 
-    card.addEventListener('input', event => event.target.value = atlas.maximum(event.target.value, 15));
+    cartaoSUS.addEventListener('input', event => {
 
-    street.addEventListener("input", event => {
+        event.target.value = atlas.maximum(event.target.value, 15);
+
+        event.target.value = atlas.replace(event.target.value, atlas.isNumeric);
+    });
+
+    rua.addEventListener("input", event => {
 
         event.target.value = atlas.maximum(event.target.value, 50);
 
-        event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
+        event.target.value = atlas.replace(event.target.value, atlas.isAlphaNumericCharacter);
 
     });
 
-    number.addEventListener("input", event => event.target.value = atlas.maximum(event.target.value, 5));
+    numero.addEventListener("input", event => {
 
-    complement.addEventListener("input", event => {
+        event.target.value = atlas.maximum(event.target.value, 7);
+
+        event.target.value = atlas.replace(event.target.value, atlas.isAlphaNumeric);
+    });
+
+    complemento.addEventListener("input", event => {
 
         event.target.value = atlas.maximum(event.target.value, 40);
 
-        event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
+        event.target.value = atlas.replace(event.target.value, atlas.isAlphaNumericCharacter);
 
     });
 
-    reference.addEventListener("input", event => {
+    pontoReferencia.addEventListener("input", event => {
 
         event.target.value = atlas.maximum(event.target.value, 40);
 
-        event.target.value = atlas.replace(event.target.value, atlas.alphaNumeric);
+        event.target.value = atlas.replace(event.target.value, atlas.isAlphaNumericCharacter);
 
     });
 
@@ -67,8 +77,10 @@
 })({
     document,
     window,
-    "alpha": alpha,
-    "alphaNumeric": alphaNumeric,
+    "isAlpha": isAlpha,
+    "isNumeric": isNumeric,
+    "isAlphaNumeric": isAlphaNumeric,
+    "isAlphaNumericCharacter": isAlphaNumericCharacter,
     "mask": maskPhone,
     "replace": replaceCharacter,
     "maximum": maximumCharacters

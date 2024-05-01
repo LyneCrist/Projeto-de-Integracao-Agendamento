@@ -44,7 +44,7 @@ def cadastrar(request):
                 return render(request, "formulario_paciente", context)
 
         print("---------------")
-        print(context["form"].errors)
+        print(context["form"].errors.as_data())
 
         context["erros"] = context["form"].errors.as_data()
 

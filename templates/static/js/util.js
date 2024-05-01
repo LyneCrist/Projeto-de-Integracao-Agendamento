@@ -1,8 +1,12 @@
 "use strict";
 
-const alpha = /[^A-Za-z\u00C0-\u00FF\s\b]/g;
+const isAlpha = /[^A-Za-z\u00C0-\u00FF\s\b]/g;
 
-const alphaNumeric = /[^A-Za-z0-9\u00C0-\u00FF._-\s\b]/g;
+const isNumeric = /[^0-9\b]/g;
+
+const isAlphaNumeric = /[^A-Za-z0-9.-]/g;
+
+const isAlphaNumericCharacter = /[^A-Za-z0-9\u00C0-\u00FF._-\s\b]/g;
 
 function maskPhone(text) {
 
