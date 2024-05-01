@@ -10,7 +10,8 @@
 }
 
 .form_row .error {
-    color: red;
+    color: #FF204E;
+    /* color: red; */
     font-weight: bold;
 }
 

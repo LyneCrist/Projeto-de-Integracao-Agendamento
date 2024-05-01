@@ -10,12 +10,12 @@ def set_column_label(field: BoundField) -> str:
     fields = {
         "nome": "col-1",
         "data_de_nascimento": "col-2",
-        "cartao_sus": "col-1",
+        "cartao_sus": "col-2",
         "telefone": "col-1",
         "rua": "col-1",
         "numero": "col-1",
-        "complemento": "col-1",
-        "ponto_referencia": "col-2",
+        "complemento": "col-3",
+        "ponto_referencia": "col-3",
     }
 
     # print(f"{type(field)} {fields[field.name]} {field.name}")
@@ -34,7 +34,7 @@ def set_column_input(field: BoundField) -> str:
         "agendamento_fixo": "col-5",
         "telefone": "col-2",
         "rua": "col-5",
-        "numero": "col-1",
+        "numero": "col-2",
         "complemento": "col-4",
         "ponto_referencia": "col-4",
     }
