@@ -1,10 +1,33 @@
 {% extends "base.html" %}
 {% block title %}
-Lista Pacientes
+    Lista Pacientes
 {% endblock title %}
 {% block content %}
-<form action="" method="get">
-    <h1>Lista pacientes</h1>
-    <a href="{% url 'cadastra_paciente' %}">Criar paciente</a>
-</form>
+    <form action="" method="get">
+        <a href="{% url 'cadastra_paciente' %}">Criar paciente</a>
+        <div class="row">
+            <div class="col-5">
+                <table class="data-list-atlas">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cartão SUS</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for paciente in pacientes %}
+                        <tr>
+                            <td>{{ paciente.nome }}</td>
+                            <td>{{ paciente.cartao_sus }}</td>
+                            <td>
+                                <input type="button" value="Editar">
+                            </td>
+                            <td>
+                                <input type="button" value="Excluir">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </form>
 {% endblock content %}

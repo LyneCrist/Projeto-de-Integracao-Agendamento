@@ -4,23 +4,17 @@ from django.forms.boundfield import BoundField
 register = template.Library()
 
 
-@register.filter(name="set_column_label")
-def set_column_label(field: BoundField) -> str:
+@register.filter(name="is_fieldset")
+def is_fieldset(field: BoundField) -> bool:
+    return True if field in ["genero", "agendamento_fixo"] else False
 
-    fields = {
-        "nome": "col-1",
-        "data_de_nascimento": "col-2",
-        "cartao_sus": "col-2",
-        "telefone": "col-1",
-        "rua": "col-1",
-        "numero": "col-1",
-        "complemento": "col-3",
-        "ponto_referencia": "col-3",
-    }
 
-    # print(f"{type(field)} {fields[field.name]} {field.name}")
+@register.filter(name="set_label")
+def set_label(field: BoundField) -> str:
 
-    return fields[field.name]
+    fields = {"genero": "Gênero", "agendamento_fixo": "Agendamento Fixo"}
+
+    return f"{fields[field.name]} *" if field.errors else fields[field.name]
 
 
 @register.filter(name="set_column_input")

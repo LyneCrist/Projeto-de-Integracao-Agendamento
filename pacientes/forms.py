@@ -1,3 +1,6 @@
+from asyncio.windows_events import NULL
+from cProfile import label
+from queue import Empty
 from django import forms
 from .utils import AGENDAMENTO_FIXO_CHOICES, GENERO_CHOICES
 from .models import Paciente
@@ -14,7 +17,6 @@ from datetime import datetime
 class PacienteForm(forms.ModelForm, CommonsUtil):
 
     nome = forms.CharField(
-        label="Nome",
         max_length=60,
         required=False,
         widget=forms.TextInput(
@@ -42,7 +44,6 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
     )
 
     genero = forms.ChoiceField(
-        label="Gênero",
         required=False,
         widget=forms.RadioSelect(),
         choices=GENERO_CHOICES,
@@ -63,7 +64,6 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
     )
 
     agendamento_fixo = forms.ChoiceField(
-        label="Agendamento Fixo",
         required=False,
         choices=AGENDAMENTO_FIXO_CHOICES,
         widget=forms.RadioSelect(),
@@ -165,7 +165,6 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
 
         ponto_referencia = self.cleaned_data.get("ponto_referencia")
 
-        # NOME
         if not nome:
             errors["nome"] = "Campo nome obrigatório"
 
@@ -181,7 +180,6 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
                     "Certifique-se de que o valor tenha apenas caracteres texto"
                 )
 
-        # DATA_DE_NASCIMENTO
         if not data_de_nascimento:
             errors["data_de_nascimento"] = "Campo data de nascimento obrigatório"
 
@@ -195,7 +193,6 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
         if not genero:
             errors["genero"] = "Campo gênero obrigatório"
 
-        # CARTAO_SUS
         if not cartao_sus:
             errors["cartao_sus"] = "Campo cartão SUS obrigatório"
 
@@ -210,6 +207,10 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
                 errors["cartao_sus"] = (
                     "Formato de campo inválido para cartão SUS, informe apenas números"
                 )
+            else:
+
+                if Paciente.objects.filter(cartao_sus=cartao_sus).count() >= 1:
+                    errors["cartao_sus"] = "Já existe um mesmo Cartão SUS cadastrado"
 
         if not agendamento_fixo:
             errors["agendamento_fixo"] = "Selecione uma opção para agendamento fixo"
@@ -219,12 +220,15 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
 
         if telefone:
 
-            if len(self.remove_characters(telefone)) != 13 or not self.is_phone_pattern(
-                self.remove_characters(telefone)
-            ):
+            telefone = self.remove_characters(telefone)
+
+            if len(telefone) != 13 or not self.is_phone_pattern(telefone):
                 errors["telefone"] = (
                     "Certifique-se de que o número de telefone esteja correto"
                 )
+
+            else:
+                self.cleaned_data["telefone"] = telefone
 
         if not rua:
             errors["rua"] = "Campo rua obrigatório"
@@ -252,7 +256,12 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
                 )
 
             elif not self.find_numbers(numero):
-                errors["numero"] = "Número de endereço obrigatório"
+                errors["numero"] = "Certifique-se de que valor informado tenha números"
+
+            elif not self.is_alpha_numeric_character_pattern(numero):
+                errors["numero"] = (
+                    "Certifique-se de que valor informado seja um número de endereço válido"
+                )
 
         if complemento:
 
@@ -279,6 +288,10 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
                 )
 
         if errors:
+
+            for key in errors.keys():
+                self.fields[key].label_suffix = ": *"
+
             raise forms.ValidationError(errors)
 
         return self.cleaned_data
