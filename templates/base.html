@@ -41,6 +41,13 @@
             </li>
         </ul>
     </form>
+
+    {% for message in messages %}
+    <div class="row-alert {{ message.tags }}">
+        <strong>{{ message }}</strong>
+    </div>
+    {% endfor %}
+
     {% comment %} <img src="{% static 'img/image.png' %}" alt=""> {% endcomment %}
     <div class="container">
         {% block content %}
@@ -49,5 +56,3 @@
 </body>
 
 </html>
-{% block script_client %}
-{% endblock script_client %}

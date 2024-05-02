@@ -76,3 +76,136 @@ body {
     font-family: arial;
     font-size: 16px;
 }
+
+.row {
+    position: relative;
+    /* border: 1px red solid; */
+    margin: 6px 0 16px 0;
+}
+
+.col-1 {
+    width: 20%;
+    /* border: 1px black solid; */
+    margin: 1px 0 10px 0;
+}
+
+.col-2 {
+    /* border: 1px black solid; */
+    margin: 1px 0 10px 0;
+}
+
+.col-3 {
+    width: 60%;
+    /* border: 1px black solid; */
+    margin: 1px 0 10px 0;
+}
+
+.col-4 {
+    width: 80%;
+    /* border: 1px black solid; */
+    margin: 1px 0 10px 0;
+}
+
+.col-5 {
+    width: 100%;
+    /* border: 1px black solid; */
+    margin: 1px 0 10px 0;
+}
+
+.row-alert {
+    position: relative;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    font-size: 18px;
+}
+
+.row-alert.success {
+    background: #04AA6D;
+    color: white;
+}
+
+.row-alert.error {
+    background: #f44336;
+    color: white;
+}
+
+@media screen and (min-width : 320px) {
+    .form_row {
+        width: 80%;
+    }
+
+    .col-1 {
+        width: 60%;
+    }
+
+    .col-2 {
+        width: 100%;
+    }
+
+}
+
+@media screen and (min-width : 414px) {
+
+    .container {
+        width: min-width !important;
+    }
+
+    .form_row {
+        width: 70%;
+    }
+
+    .col-1 {
+        width: 40%;
+    }
+
+    .col-2 {
+        width: 100%;
+    }
+
+}
+
+
+@media screen and (min-width : 1000px) {
+    .form_row {
+        width: 65%;
+    }
+
+    .col-1 {
+        width: 20%;
+    }
+
+    .col-2 {
+        width: 40%;
+    }
+
+}
+
+@media screen and (min-width : 1024px) {
+    .form_row {
+        width: 50%;
+    }
+
+    .col-1 {
+        width: 20%;
+    }
+
+    .col-2 {
+        width: 40%;
+    }
+
+}
+
+@media screen and (min-width : 1520px) {
+    .form_row {
+        width: 40%;
+    }
+
+    .col-1 {
+        width: 20%;
+    }
+
+    .col-2 {
+        width: 40%;
+    }
+
+}

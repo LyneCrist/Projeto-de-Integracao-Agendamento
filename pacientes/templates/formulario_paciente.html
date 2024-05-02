@@ -20,18 +20,17 @@
                 <h2>Cadastro de Paciente</h2>
             </div>
         </div>
-        {% if status == '1' %}<div class="message-success">{{ message }}</div>{% endif %}
         {% for field in form %}
-            {% if field.name in FIELDSET_LEGENDS %}
+            {% if field.name|is_fieldset %}
                 <div class="row">
                     <fieldset>
-                        <legend class="{{ field.errors|yesno:"error," }}">{{ field.errors|yesno:"* ," }}{{ field.label_tag }}</legend>
+                        <legend class="{{ field.errors|yesno:" error," }}">{{ field|set_label }}</legend>
                         {{ field }}
                     </fieldset>
                 </div>
             {% else %}
                 <div class="row">
-                    <div class="col-5 {{ field.errors|yesno:"error," }}">{{ field.errors|yesno:"* ," }}{{ field.label_tag }}</div>
+                    <div class="col-5 {{ field.errors|yesno:" error," }}">{{ field.label_tag }}</div>
                 </div>
                 <div class="row">
                     <div class="{{ field|set_column_input }}">{{ field }}</div>
@@ -47,7 +46,5 @@
             </div>
         </div>
     </form>
-{% endblock content %}
-{% block script_client %}
     <script src="{% static 'js/patient-form.js' %}"></script>
-{% endblock script_client %}
+{% endblock content %}

@@ -25,9 +25,9 @@ class Paciente(models.Model):
 
     numero = models.CharField(max_length=7)
 
-    complemento = models.CharField(max_length=60)
+    complemento = models.CharField(max_length=60, null=True)
 
-    ponto_referencia = models.CharField(max_length=60)
+    ponto_referencia = models.CharField(max_length=60, null=True)
 
     status = models.IntegerField(default=Status.ATIVO)
 
@@ -40,3 +40,4 @@ class Paciente(models.Model):
 
     class Meta:
         db_table = "pacientes"
+        ordering = ["-data_criacao"]
