@@ -11,7 +11,7 @@ def index(request):
 
     # context["form"] = form
 
-    return render(request, "form.html", context)
+    return render(request, "form.html")
 
 
 def login(request):

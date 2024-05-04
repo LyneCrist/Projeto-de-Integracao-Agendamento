@@ -10,10 +10,6 @@ def listar(request):
 
     context = {}
 
-    # context["pacientes"] = Paciente.objects.all()[:15].order_by(
-    #     "data_criacao, data_alteracao"
-    # )
-
     context["pacientes"] = Paciente.objects.all()[:15]
 
     return render(request, "lista_pacientes.html", context)
@@ -58,13 +54,24 @@ def cadastrar(request):
 
 def atualizar(request, pk: int):
 
+    context = {}
+
+    paciente = Paciente.objects.get(pk=pk)
+
     if request.method == "POST":
 
-        paciente = Paciente.objects.get(id=pk)
+        context["form"] = PacienteForm(request.POST, instance=paciente)
 
-        form = PacienteForm(instance=paciente)
+        if context["form"].is_valid():
 
-    return redirect("/lista_pacientes/")
+            # print(context["form"].cleaned_data)
+            context["form"].save()
+
+            return redirect("paciente-detail", paciente.pk)
+    else:
+        context["form"] = PacienteForm(instance=paciente)
+
+    return render(request, "editar_paciente.html", context)
 
 
 def excluir(request, pk: int):
