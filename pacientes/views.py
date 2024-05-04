@@ -34,7 +34,7 @@ def cadastrar(request):
 
                 messages.success(request, "Paciente cadastrado com sucesso")
 
-                return redirect("cadastra_paciente")
+                return redirect("criar_paciente")
 
             except:
 
@@ -42,14 +42,14 @@ def cadastrar(request):
                     request, "Ocorreu um erro durante o registo, tente novamente"
                 )
 
-                return render(request, "formulario_paciente.html", context)
+                return render(request, "criar_paciente.html", context)
 
         context["erros"] = context["form"].errors.as_data()
 
     else:
         context["form"] = PacienteForm()
 
-    return render(request, "formulario_paciente.html", context)
+    return render(request, "criar_paciente.html", context)
 
 
 def atualizar(request, pk: int):
