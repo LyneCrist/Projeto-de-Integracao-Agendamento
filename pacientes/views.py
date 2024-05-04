@@ -10,10 +10,6 @@ def listar(request):
 
     context = {}
 
-    # context["pacientes"] = Paciente.objects.all()[:15].order_by(
-    #     "data_criacao, data_alteracao"
-    # )
-
     context["pacientes"] = Paciente.objects.all()[:15]
 
     return render(request, "lista_pacientes.html", context)
@@ -38,7 +34,7 @@ def cadastrar(request):
 
                 messages.success(request, "Paciente cadastrado com sucesso")
 
-                return redirect("cadastra_paciente")
+                return redirect("criar_paciente")
 
             except:
 
@@ -46,25 +42,36 @@ def cadastrar(request):
                     request, "Ocorreu um erro durante o registo, tente novamente"
                 )
 
-                return render(request, "formulario_paciente.html", context)
+                return render(request, "criar_paciente.html", context)
 
         context["erros"] = context["form"].errors.as_data()
 
     else:
         context["form"] = PacienteForm()
 
-    return render(request, "formulario_paciente.html", context)
+    return render(request, "criar_paciente.html", context)
 
 
 def atualizar(request, pk: int):
 
+    context = {}
+
+    paciente = Paciente.objects.get(pk=pk)
+
     if request.method == "POST":
 
-        paciente = Paciente.objects.get(id=pk)
+        context["form"] = PacienteForm(request.POST, instance=paciente)
 
-        form = PacienteForm(instance=paciente)
+        if context["form"].is_valid():
 
-    return redirect("/lista_pacientes/")
+            # print(context["form"].cleaned_data)
+            context["form"].save()
+
+            return redirect("paciente-detail", paciente.pk)
+    else:
+        context["form"] = PacienteForm(instance=paciente)
+
+    return render(request, "editar_paciente.html", context)
 
 
 def excluir(request, pk: int):
