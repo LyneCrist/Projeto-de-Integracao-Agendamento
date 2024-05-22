@@ -58,13 +58,9 @@ def atualizar(request, id: int):
 
     paciente = Paciente.objects.get(id=id)
 
-    print(">>>>>>>id paciente", paciente.pk)
-
     if request.method == "POST":
 
         context["form"] = PacienteForm(request.POST, instance=paciente)
-
-        print("is_valid>>>", context["form"].is_valid())
 
         if context["form"].is_valid():
 
@@ -83,11 +79,11 @@ def atualizar(request, id: int):
     return render(request, "editar_paciente.html", context)
 
 
-def excluir(request, pk: int):
+def excluir(request, id: int):
 
-    if request.method == "POST":
+    # if request.method == "POST":
 
-        paciente = Paciente.objects.get(id=pk)
-        paciente.delete()
+    paciente = Paciente.objects.get(id=id)
+    paciente.delete()
 
-    return redirect("/lista_pacientes/")
+    return redirect("lista_pacientes")
