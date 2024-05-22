@@ -52,24 +52,33 @@ def cadastrar(request):
     return render(request, "criar_paciente.html", context)
 
 
-def atualizar(request, pk: int):
+def atualizar(request, id: int):
 
     context = {}
 
-    paciente = Paciente.objects.get(pk=pk)
+    paciente = Paciente.objects.get(id=id)
+
+    print(">>>>>>>id paciente", paciente.pk)
 
     if request.method == "POST":
 
         context["form"] = PacienteForm(request.POST, instance=paciente)
 
+        print("is_valid>>>", context["form"].is_valid())
+
         if context["form"].is_valid():
 
-            # print(context["form"].cleaned_data)
             context["form"].save()
 
-            return redirect("paciente-detail", paciente.pk)
-    else:
-        context["form"] = PacienteForm(instance=paciente)
+            return redirect("editar_paciente", paciente.pk)
+
+        context["erros"] = context["form"].errors.as_data()
+
+        print(context["erros"])
+
+    context["id"] = paciente.pk
+
+    context["form"] = PacienteForm(instance=paciente)
 
     return render(request, "editar_paciente.html", context)
 
