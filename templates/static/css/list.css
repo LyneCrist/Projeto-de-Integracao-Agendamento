@@ -61,3 +61,7 @@ a.button-link {
     background-color: #04AA6D;
     color: white;
 }
+
+.data-list-atlas .td-align-center {
+    text-align: center;
+}
