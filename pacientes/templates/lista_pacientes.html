@@ -1,11 +1,16 @@
 {% extends "base.html" %}
+{% load static poll_extras %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+{% endblock css %}
+
 {% block title %}
 Lista Pacientes
 {% endblock title %}
 {% block content %}
-<form action="" method="get">
+<form action="" method="get" class="form_row_list">
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-5">
 
             <input list="browsers" id="browser_id" name="browser" placeholder="Starting typing the name of the browser"
@@ -21,8 +26,10 @@ Lista Pacientes
 
         </div>
     </div>
-
-    <a href="{% url 'criar_paciente' %}">Criar paciente</a>
+ -->
+    <div class="row-left col-5">
+        <a class="button-link" href="{% url 'criar_paciente' %}">Criar paciente</a>
+    </div>
 
     <div class="row">
         <div class="col-5">
@@ -30,18 +37,22 @@ Lista Pacientes
                 <tr>
                     <th>Nome</th>
                     <th>Cartão SUS</th>
-                    <th colspan="2"></th>
+                    <th colspan="3"></th>
                 </tr>
                 {% for paciente in pacientes %}
                 <tr>
                     <td>{{ paciente.nome }}</td>
                     <td>{{ paciente.cartao_sus }}</td>
-                    <td>
-                        <a href="{% url 'editar_paciente' paciente.id %}">Editar</a>
+                    <td class="td-align-center"">
+                        <a href=" {% url 'editar_paciente' paciente.id %}">Editar</a>
                     </td>
-                    <td>
-                        <a href="{% url 'excluir_paciente' paciente.id %}">Excluir</a>
+                    <td class="td-align-center"">
+                        <a href=" {% url 'excluir_paciente' paciente.id %}">Excluir</a>
                     </td>
+                    <td class="td-align-center"">
+                        <a href="">Agendar Consulta</a>
+                    </td>
+
                 </tr>
                 {% endfor %}
             </table>
