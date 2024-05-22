@@ -2,6 +2,8 @@ from asyncio.windows_events import NULL
 from cProfile import label
 from queue import Empty
 from django import forms
+
+import pacientes
 from .utils import AGENDAMENTO_FIXO_CHOICES, GENERO_CHOICES
 from .models import Paciente
 from common.util import CommonsUtil
@@ -15,6 +17,16 @@ from datetime import datetime
 
 
 class PacienteForm(forms.ModelForm, CommonsUtil):
+
+    # hidden_id = forms.CharField(
+    #     required=False,
+    #     widget=forms.HiddenInput(
+    #         attrs={
+    #             "name": "hdnPacienteId",
+    #             "id": "hdnPacienteId",
+    #         }
+    #     ),
+    # )
 
     nome = forms.CharField(
         max_length=60,
@@ -145,6 +157,8 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
 
         errors = {}
 
+        paciente_id = self.instance.pk
+
         nome = self.cleaned_data.get("nome")
 
         data_de_nascimento = self.cleaned_data.get("data_de_nascimento")
@@ -209,7 +223,17 @@ class PacienteForm(forms.ModelForm, CommonsUtil):
                 )
             else:
 
-                if Paciente.objects.filter(cartao_sus=cartao_sus).count() >= 1:
+                if paciente_id:
+
+                    if (
+                        Paciente.objects.filter(cartao_sus=cartao_sus)
+                        .exclude(id=paciente_id)
+                        .exists()
+                    ):
+                        errors["cartao_sus"] = (
+                            "Já existe um mesmo Cartão SUS cadastrado"
+                        )
+                elif Paciente.objects.filter(cartao_sus=cartao_sus).exists():
                     errors["cartao_sus"] = "Já existe um mesmo Cartão SUS cadastrado"
 
         if not agendamento_fixo:
