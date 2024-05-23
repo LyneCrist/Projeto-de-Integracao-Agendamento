@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import TransporteForm
 from .models import Transporte
+from pacientes.models import Paciente
 
 from django.contrib import messages
 
@@ -14,7 +15,7 @@ def listar(request):
     return render(request, "lista_transportes.html", context)
 
 
-def cadastrar(request):
+def cadastrar(request, paciente_id: int):
 
     context = {}
 
@@ -46,6 +47,10 @@ def cadastrar(request):
         context["erros"] = context["form"].errors.as_data()
 
     else:
+
+        paciente = Paciente.objects.get(id=paciente_id)
+        context["paciente"] = paciente
+        context["paciente_id"] = paciente.pk
         context["form"] = TransporteForm()
 
     return render(request, "criar_transporte.html", context)

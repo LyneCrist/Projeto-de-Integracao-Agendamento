@@ -7,7 +7,8 @@
 Cadastro Condicao
 {% endblock title %}
 {% block content %}
-<form action="{% url 'criar_condicao' %}" method="post" class="form_row" name="frmCondicao" id="frmCondicao">
+<form action="{% url 'criar_condicao' paciente_id %}" method="post" class="form_row" name="frmCondicao"
+    id="frmCondicao">
     {% csrf_token %}
     <div class="row">
         <div class="col-5">

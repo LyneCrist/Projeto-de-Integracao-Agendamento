@@ -21,11 +21,11 @@ class Transporte(models.Model):
 
     data_de_transporte = models.DateField()
 
+    horario_de_atendimento = models.TimeField()
+
     motivo_de_transporte = models.IntegerField(choices=MOTIVO_CHOICES)
 
     descricao_motivo = models.CharField(max_length=60, null=True)
-
-    horario_de_atendimento = models.TimeField()
 
     rua = models.CharField(max_length=60)
 
@@ -37,7 +37,7 @@ class Transporte(models.Model):
 
     destino = models.CharField(max_length=60)
 
-    observação = models.CharField(max_length=60)
+    observacao = models.CharField(max_length=60)
 
     status = models.IntegerField(choices=STATUS_CHOICES)
 

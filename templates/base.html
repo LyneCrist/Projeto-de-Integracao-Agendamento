@@ -23,14 +23,14 @@
 </head>
 
 <body>
-    <form action="{% url 'logout' %}" method="post" class="navbar-right">
+    <form method="post" class="navbar-right">
         {% csrf_token %}
         <ul class="horizontal">
             <li>
-                <a href="{% url 'lista_consultas' %}" class="active">Transportes</a>
+                <a href="{% url 'listar_transportes' %}" class="active">Transportes</a>
             </li>
             <li>
-                <a href="{% url 'lista_pacientes' %}">Pacientes</a>
+                <a href="{% url 'listar_pacientes' %}">Pacientes</a>
             </li>
         </ul>
     </form>

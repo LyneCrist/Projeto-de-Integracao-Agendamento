@@ -4,9 +4,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", RedirectView.as_view(url="/consultas/")),
-    path("consultas/", include("consultas.urls")),
-    path("enderecos/", include("enderecos.urls")),
+    path("", RedirectView.as_view(url="/transportes/")),
+    path("transportes/", include("transportes.urls")),
     path("pacientes/", include("pacientes.urls")),
-    path("auth/", include("usuarios.urls")),
+    path("condicoes/", include("condicoes.urls")),
+    # path("consultas/", include("consultas.urls")),
+    # path("enderecos/", include("enderecos.urls")),
+    # path("auth/", include("usuarios.urls")),
 ]

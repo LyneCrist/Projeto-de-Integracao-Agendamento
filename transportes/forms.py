@@ -1,15 +1,42 @@
 from django import forms
 
-# from .utils import (
-#     CONDICAO_FISICA_CHOICES,
-#     ACOMPANHANTE_CHOICES,
-#     CUIDADO_ESPECIAL_CHOICES,
-# )
+
+from .utils import MOTIVO_CHOICES
+
 from .models import Transporte
 from common.util import CommonsUtil
 
 
 class TransporteForm(forms.ModelForm, CommonsUtil):
+
+    data_de_transporte = forms.DateField()
+
+    horario_de_atendimento = forms.TimeField()
+
+    motivo_de_transporte = forms.ChoiceField(choices=MOTIVO_CHOICES)
+
+    descricao_motivo = forms.CharField()
+
+    rua = forms.CharField()
+
+    bairro = forms.CharField()
+
+    numero = forms.CharField()
+
+    cidade = forms.CharField()
+
+    destino = forms.CharField()
+
+    observacao = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                "name": "observacao",
+                "id": "observacao",
+                "rows": "5",
+            },
+        ),
+    )
 
     # condicao_fisica = forms.ChoiceField(
     #     label="Condição Física",
@@ -64,7 +91,7 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
 
         fields = "__all__"
 
-        exclude = ["data_criacao", "data_alteracao"]
+        exclude = ["paciente", "status", "data_criacao", "data_alteracao"]
 
     def clean(self):
 

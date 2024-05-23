@@ -54,10 +54,10 @@ Lista Pacientes
                         <a href=" {% url 'excluir_paciente' paciente.id %}">Excluir</a>
                     </td>
                     <td class="td-align-center"">
-                        <a href=" {% url 'excluir_paciente' paciente.id %}">Inserir Condições</a>
+                        <a href=" {% url 'criar_condicao' paciente.id %}">Inserir Condições</a>
                     </td>
                     <td class="td-align-center"">
-                        <a href=" {% url 'excluir_paciente' paciente.id %}">Solicitar Transporte</a>
+                        <a href=" {% url 'criar_transporte' paciente.id %}">Solicitar Transporte</a>
                     </td>
 
                 </tr>
