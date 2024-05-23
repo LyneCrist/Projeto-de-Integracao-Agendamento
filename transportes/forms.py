@@ -1,11 +1,8 @@
-from email.policy import default
 from django import forms
-
-
-from .utils import MOTIVO_CHOICES
-
-from .models import Transporte
 from common.util import CommonsUtil
+from .utils import MOTIVO_CHOICES
+from .models import Transporte
+from datetime import datetime, time
 
 
 class TransporteForm(forms.ModelForm, CommonsUtil):
@@ -27,6 +24,7 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
 
     horario_de_atendimento = forms.TimeField(
         label="Horário de Atendimento",
+        required=False,
         widget=forms.TimeInput(
             attrs={
                 "type": "time",
@@ -55,17 +53,27 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
         ),
     )
 
-    rua = forms.CharField()
+    rua = forms.CharField(
+        required=False,
+    )
 
-    bairro = forms.CharField()
+    bairro = forms.CharField(
+        required=False,
+    )
 
     numero = forms.CharField(
         label="Número",
+        required=False,
+        max_length=7,
     )
 
-    cidade = forms.CharField()
+    cidade = forms.CharField(
+        required=False,
+    )
 
-    destino = forms.CharField()
+    destino = forms.CharField(
+        required=False,
+    )
 
     observacao = forms.CharField(
         label="Observação",
@@ -93,157 +101,110 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
 
         # paciente_id = self.instance.pk
 
-        # nome = self.cleaned_data.get("nome")
+        data_de_transporte = self.cleaned_data.get("data_de_transporte")
 
-        # data_de_nascimento = self.cleaned_data.get("data_de_nascimento")
+        horario_de_atendimento = self.cleaned_data.get("horario_de_atendimento")
 
-        # genero = self.cleaned_data.get("genero")
+        motivo_de_transporte = self.cleaned_data.get("motivo_de_transporte")
 
-        # cartao_sus = self.cleaned_data.get("cartao_sus")
+        descricao_motivo = self.cleaned_data.get("descricao_motivo")
 
-        # agendamento_fixo = self.cleaned_data.get("agendamento_fixo")
+        rua = self.cleaned_data.get("rua")
 
-        # telefone = self.cleaned_data.get("telefone")
+        bairro = self.cleaned_data.get("bairro")
 
-        # rua = self.cleaned_data.get("rua")
+        numero = self.cleaned_data.get("numero")
 
-        # numero = self.cleaned_data.get("numero")
+        cidade = self.cleaned_data.get("cidade")
 
-        # complemento = self.cleaned_data.get("complemento")
+        destino = self.cleaned_data.get("destino")
 
-        # ponto_referencia = self.cleaned_data.get("ponto_referencia")
+        observacao = self.cleaned_data.get("observacao")
 
-        # if not nome:
-        #     errors["nome"] = "Campo nome obrigatório"
+        if not data_de_transporte:
+            errors["data_de_transporte"] = "Campo data de transporte obrigatório"
 
-        # if nome:
+        if data_de_transporte:
 
-        #     if len(nome) < 5 or len(nome) > 60:
-        #         errors["nome"] = (
-        #             "Certifique-se de que o valor tenha entre 5 a 60 caracteres"
-        #         )
+            if data_de_transporte.year != datetime.now().year:
+                errors["data_de_transporte"] = "Informe uma data de transporte válida"
 
-        #     elif not self.is_alpha_pattern(nome):
-        #         errors["nome"] = (
-        #             "Certifique-se de que o valor tenha apenas caracteres texto"
-        #         )
+        if not horario_de_atendimento:
+            errors["horario_de_atendimento"] = "Campo data de atendimento obrigatório"
 
-        # if not data_de_nascimento:
-        #     errors["data_de_nascimento"] = "Campo data de nascimento obrigatório"
+        if horario_de_atendimento:
 
-        # if data_de_nascimento:
+            start_time = time(8, 0, 0)
 
-        #     ano = int(datetime.now().year - (data_de_nascimento.year))
+            end_time = time(17, 0, 0)
 
-        #     if ano == -1 or ano > 100:
-        #         errors["data_de_nascimento"] = "Informe uma data de nascimento válida"
+            if horario_de_atendimento < start_time or horario_de_atendimento > end_time:
+                errors["horario_de_atendimento"] = (
+                    f"Erro: Hora de atendimento deve respeitar janela das {start_time.hour}hrs às {end_time.hour}hrs"
+                )
 
-        # if not genero:
-        #     errors["genero"] = "Campo gênero obrigatório"
+        if motivo_de_transporte == "0":
+            errors["motivo_de_transporte"] = "Selecione motivo para o transporte"
 
-        # if not cartao_sus:
-        #     errors["cartao_sus"] = "Campo cartão SUS obrigatório"
+        if not descricao_motivo:
+            errors["descricao_motivo"] = "Campo descricao motivo obrigatório"
 
-        # if cartao_sus:
+        if descricao_motivo:
 
-        #     if len(cartao_sus) != 15:
-        #         errors["cartao_sus"] = (
-        #             "Campo cartão SUS deve possuir um tamanho de 15 dígitos"
-        #         )
+            if len(descricao_motivo) < 10 or len(descricao_motivo) > 160:
+                errors["descricao_motivo"] = (
+                    "Certifique-se de que o valor tenha entre 10 a 160 caracteres"
+                )
 
-        #     elif not self.is_numeric_pattern(cartao_sus):
-        #         errors["cartao_sus"] = (
-        #             "Formato de campo inválido para cartão SUS, informe apenas números"
-        #         )
-        #     else:
+        if not rua:
+            errors["rua"] = "Campo rua obrigatório"
 
-        #         if paciente_id:
+        if rua:
 
-        #             if (
-        #                 Condicao.objects.filter(cartao_sus=cartao_sus)
-        #                 .exclude(id=paciente_id)
-        #                 .exists()
-        #             ):
-        #                 errors["cartao_sus"] = (
-        #                     "Já existe um mesmo Cartão SUS cadastrado"
-        #                 )
-        #         elif Condicao.objects.filter(cartao_sus=cartao_sus).exists():
-        #             errors["cartao_sus"] = "Já existe um mesmo Cartão SUS cadastrado"
+            if len(rua) < 5 or len(rua) > 60:
+                errors["rua"] = (
+                    "Certifique-se de que o valor tenha entre 5 a 60 caracteres"
+                )
 
-        # if not agendamento_fixo:
-        #     errors["agendamento_fixo"] = "Selecione uma opção para agendamento fixo"
+            elif not self.is_alpha_numeric_character_pattern(rua):
+                errors["rua"] = (
+                    "Certifique-se de que o valor tenha apenas caracteres texto"
+                )
 
-        # if not telefone:
-        #     errors["telefone"] = "Campo telefone obrigatório"
+        if not bairro:
+            errors["bairro"] = "Campo bairro obrigatório"
 
-        # if telefone:
+        if not numero:
+            errors["numero"] = "Campo número obrigatório"
 
-        #     telefone = self.remove_characters(telefone)
+        if numero:
 
-        #     if len(telefone) != 13 or not self.is_phone_pattern(telefone):
-        #         errors["telefone"] = (
-        #             "Certifique-se de que o número de telefone esteja correto"
-        #         )
+            if len(numero) > 7:
+                errors["numero"] = "Campo número permite no máximo 7 caracteres"
 
-        #     else:
-        #         self.cleaned_data["telefone"] = telefone
+            elif not self.find_numbers(numero):
+                errors["numero"] = "Certifique-se de que valor informado tenha números"
 
-        # if not rua:
-        #     errors["rua"] = "Campo rua obrigatório"
+            elif not self.is_alpha_numeric_character_pattern(numero):
+                errors["numero"] = (
+                    "Certifique-se de que valor informado seja um número de endereço válido"
+                )
 
-        # if rua:
+        if not cidade:
+            errors["cidade"] = "Campo cidade obrigatório"
 
-        #     if len(rua) < 5 or len(rua) > 60:
-        #         errors["rua"] = (
-        #             "Certifique-se de que o valor tenha entre 5 a 60 caracteres"
-        #         )
+        if not destino:
+            errors["destino"] = "Campo destino obrigatório"
 
-        #     elif not self.is_alpha_numeric_character_pattern(rua):
-        #         errors["rua"] = (
-        #             "Certifique-se de que o valor tenha apenas caracteres texto"
-        #         )
+        if not observacao:
+            errors["observacao"] = "Campo observação obrigatório"
 
-        # if not numero:
-        #     errors["numero"] = "Campo número obrigatório"
+        if observacao:
 
-        # if numero:
-
-        #     if len(numero) > 7:
-        #         errors["numero"] = (
-        #             "Certifique-se de que o valor tenha no máximo 7 caracteres"
-        #         )
-
-        #     elif not self.find_numbers(numero):
-        #         errors["numero"] = "Certifique-se de que valor informado tenha números"
-
-        #     elif not self.is_alpha_numeric_character_pattern(numero):
-        #         errors["numero"] = (
-        #             "Certifique-se de que valor informado seja um número de endereço válido"
-        #         )
-
-        # if complemento:
-
-        #     if len(complemento) < 5 or len(complemento) > 60:
-        #         errors["complemento"] = (
-        #             "Certifique-se de que o valor tenha entre 5 a 60 caracteres"
-        #         )
-
-        #     elif not self.is_alpha_numeric_character_pattern(complemento):
-        #         errors["complemento"] = (
-        #             "Certifique-se de que o valor tenha apenas caracteres texto"
-        #         )
-
-        # if ponto_referencia:
-
-        #     if len(ponto_referencia) < 5 or len(ponto_referencia) > 60:
-        #         errors["ponto_referencia"] = (
-        #             "Certifique-se de que o valor tenha entre 5 a 60 caracteres"
-        #         )
-
-        #     elif not self.is_alpha_numeric_character_pattern(ponto_referencia):
-        #         errors["ponto_referencia"] = (
-        #             "Certifique-se de que o valor tenha apenas caracteres texto"
-        #         )
+            if len(observacao) < 10 or len(observacao) > 160:
+                errors["observacao"] = (
+                    "Certifique-se de que o valor tenha entre 10 a 160 caracteres"
+                )
 
         if errors:
 

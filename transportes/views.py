@@ -10,16 +10,35 @@ def listar(request):
 
     context = {}
 
-    context["transportes"] = Transporte.objects.all()[:15]
+    context["transportes"] = Transporte.objects.all()
+
+    return render(request, "lista_transportes.html", context)
+
+
+def listar_por_paciente(request, paciente_id: int):
+
+    context = {}
+
+    transportes: Transporte = Transporte.objects.get(id=paciente_id)
+
+    context["paciente"] = transportes.paciente.nome
+
+    context["transportes"] = transportes
+
+    context["transporte_id"] = transportes.pk
 
     return render(request, "lista_transportes.html", context)
 
 
 def cadastrar(request, paciente_id: int):
 
+    paciente = Paciente.objects.get(id=paciente_id)
+
     context = {}
 
     context["title"] = "Cadastra Transporte"
+    context["paciente_id"] = paciente.pk
+    context["nome"] = paciente
 
     if request.method == "POST":
 
@@ -30,27 +49,27 @@ def cadastrar(request, paciente_id: int):
 
                 # print(context["form"].cleaned_data)
 
-                context["form"].save()
+                novo_transporte: Transporte = context["form"].save(commit=False)
 
-                messages.success(request, "Transporte cadastrado com sucesso")
+                novo_transporte.paciente = paciente
 
-                return redirect("listar_transportes")
+                novo_transporte.save()
 
-            except:
+                # messages.success(request, "Transporte cadastrado com sucesso")
+
+                return redirect("listar_por_paciente", paciente_id=paciente.pk)
+
+            except Exception as exc:
 
                 messages.error(
-                    request, "Ocorreu um erro durante o registo, tente novamente"
+                    request, "Ocorreu um erro durante o registro, tente novamente"
                 )
 
                 return render(request, "criar_transporte.html", context)
 
-        context["erros"] = context["form"].errors.as_data()
+        context["errors"] = context["form"].errors.as_data()
 
     else:
-
-        paciente = Paciente.objects.get(id=paciente_id)
-        context["paciente"] = paciente
-        context["paciente_id"] = paciente.pk
         context["form"] = TransporteForm()
 
     return render(request, "criar_transporte.html", context)

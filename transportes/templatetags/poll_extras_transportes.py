@@ -27,7 +27,7 @@ def set_column_input(field: BoundField) -> str:
         "descricao_motivo": "col-5",
         "rua": "col-5",
         "bairro": "col-5",
-        "numero": "col-5",
+        "numero": "col-2",
         "cidade": "col-5",
         "destino": "col-5",
         "observacao": "col-5",
