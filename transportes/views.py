@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+
+import pacientes
+import transportes
 from .forms import TransporteForm
 from .models import Transporte
 from pacientes.models import Paciente
@@ -19,13 +22,13 @@ def listar_por_paciente(request, paciente_id: int):
 
     context = {}
 
-    transportes: Transporte = Transporte.objects.get(id=paciente_id)
+    paciente: Paciente = Paciente.objects.get(id=paciente_id)
 
-    context["paciente"] = transportes.paciente.nome
+    transportes = Transporte.objects.filter(paciente=paciente)
+
+    context["paciente"] = paciente.nome
 
     context["transportes"] = transportes
-
-    context["transporte_id"] = transportes.pk
 
     return render(request, "lista_transportes.html", context)
 

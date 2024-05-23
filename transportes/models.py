@@ -5,7 +5,7 @@ from transportes.utils import MOTIVO_CHOICES
 
 class Transporte(models.Model):
 
-    STATUS_CHOICES = ((1, "Confirmado"), (2, "Cancelado"), (3, "Realizado"))
+    STATUS_CHOICES = ((1, "Agendado"), (2, "Cancelado"), (3, "Realizado"))
 
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
 
