@@ -1,3 +1,4 @@
+from email.policy import default
 from django import forms
 
 
@@ -9,81 +10,68 @@ from common.util import CommonsUtil
 
 class TransporteForm(forms.ModelForm, CommonsUtil):
 
-    data_de_transporte = forms.DateField()
+    data_de_transporte = forms.DateField(
+        label="Data de Transporte",
+        required=False,
+        input_formats=["%Y-%m-%d"],
+        widget=forms.DateInput(
+            format="%Y-%m-%d",
+            attrs={
+                "type": "date",
+                "name": "dataTransporte",
+                "id": "dataTransporte",
+                "autocomplete": "off",
+            },
+        ),
+    )
 
-    horario_de_atendimento = forms.TimeField()
+    horario_de_atendimento = forms.TimeField(
+        label="Horário de Atendimento",
+        widget=forms.TimeInput(
+            attrs={
+                "type": "time",
+                "name": "horarioAtendimento",
+                "id": "horarioAtendimento",
+                "min": "09:00",
+                "max": "16:00",
+            },
+        ),
+    )
 
-    motivo_de_transporte = forms.ChoiceField(choices=MOTIVO_CHOICES)
+    motivo_de_transporte = forms.ChoiceField(
+        label="Motivo de Transporte",
+        required=False,
+        widget=forms.Select,
+        choices=MOTIVO_CHOICES,
+    )
 
-    descricao_motivo = forms.CharField()
+    descricao_motivo = forms.CharField(
+        label="Descrição motivo",
+    )
 
     rua = forms.CharField()
 
     bairro = forms.CharField()
 
-    numero = forms.CharField()
+    numero = forms.CharField(
+        label="Número",
+    )
 
     cidade = forms.CharField()
 
     destino = forms.CharField()
 
     observacao = forms.CharField(
+        label="Observação",
         required=False,
         widget=forms.Textarea(
             attrs={
                 "name": "observacao",
                 "id": "observacao",
-                "rows": "5",
+                "maxlength": "60",
             },
         ),
     )
-
-    # condicao_fisica = forms.ChoiceField(
-    #     label="Condição Física",
-    #     required=False,
-    #     widget=forms.Select(
-    #         attrs={
-    #             "name": "condicao_fisica",
-    #             "id": "condicao_fisica",
-    #         }
-    #     ),
-    #     choices=CONDICAO_FISICA_CHOICES,
-    # )
-
-    # descricao_condicao = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             "name": "condicao_fisica",
-    #             "id": "condicao_fisica",
-    #             "rows": "5",
-    #         },
-    #     ),
-    # )
-
-    # acompanhante = forms.ChoiceField(
-    #     required=False,
-    #     widget=forms.RadioSelect(),
-    #     choices=ACOMPANHANTE_CHOICES,
-    # )
-
-    # cuidado_especial = forms.ChoiceField(
-    #     required=False,
-    #     widget=forms.RadioSelect(),
-    #     choices=CUIDADO_ESPECIAL_CHOICES,
-    # )
-
-    # descricao_cuidado = forms.CharField(
-    #     label="Descrição Cuidado",
-    #     required=False,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             "name": "descricao_cuidado",
-    #             "id": "descricao_cuidado",
-    #             "rows": "5",
-    #         },
-    #     ),
-    # )
 
     class Meta:
 
