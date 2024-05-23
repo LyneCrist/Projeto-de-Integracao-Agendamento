@@ -29,7 +29,7 @@ class Transporte(models.Model):
 
     observacao = models.CharField(max_length=60)
 
-    status = models.IntegerField(choices=STATUS_CHOICES)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1)
 
     data_criacao = models.DateTimeField(auto_now_add=True)
 

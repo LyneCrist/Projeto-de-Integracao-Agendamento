@@ -39,7 +39,7 @@ def cadastrar(request, paciente_id: int):
             except:
 
                 messages.error(
-                    request, "Ocorreu um erro durante o registo, tente novamente"
+                    request, "Ocorreu um erro durante o registro, tente novamente"
                 )
 
                 return render(request, "criar_condicao.html", context)
