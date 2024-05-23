@@ -47,6 +47,12 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
 
     descricao_motivo = forms.CharField(
         label="Descrição motivo",
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                "maxlength": "160",
+            },
+        ),
     )
 
     rua = forms.CharField()
@@ -66,9 +72,7 @@ class TransporteForm(forms.ModelForm, CommonsUtil):
         required=False,
         widget=forms.Textarea(
             attrs={
-                "name": "observacao",
-                "id": "observacao",
-                "maxlength": "60",
+                "maxlength": "160",
             },
         ),
     )
