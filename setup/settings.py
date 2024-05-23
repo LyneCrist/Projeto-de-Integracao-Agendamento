@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "usuarios.apps.UsuariosConfig",
     "pacientes.apps.PacientesConfig",
     "consultas.apps.ConsultasConfig",
+    "condicoes.apps.CondicoesConfig",
+    "transportes.apps.TransportesConfig",
     # 'enderecos.apps.EnderecosConfig'
     # 'consultas.apps.ConsultasConfig'
 ]
