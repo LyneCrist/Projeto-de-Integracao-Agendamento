@@ -37,12 +37,16 @@ Lista Pacientes
                 <tr>
                     <th>Nome</th>
                     <th>Cartão SUS</th>
-                    <th colspan="3"></th>
+                    <th>Condições</th>
+                    <th colspan="5"></th>
                 </tr>
                 {% for paciente in pacientes %}
                 <tr>
                     <td>{{ paciente.nome }}</td>
                     <td>{{ paciente.cartao_sus }}</td>
+                    <td>
+                        <a href=" {% url 'editar_paciente' paciente.id %}">3</a>
+                    </td>
                     <td class="td-align-center"">
                         <a href=" {% url 'editar_paciente' paciente.id %}">Editar</a>
                     </td>
@@ -50,7 +54,10 @@ Lista Pacientes
                         <a href=" {% url 'excluir_paciente' paciente.id %}">Excluir</a>
                     </td>
                     <td class="td-align-center"">
-                        <a href="">Agendar Consulta</a>
+                        <a href=" {% url 'criar_condicao' paciente.id %}">Inserir Condições</a>
+                    </td>
+                    <td class="td-align-center"">
+                        <a href=" {% url 'criar_transporte' paciente.id %}">Solicitar Transporte</a>
                     </td>
 
                 </tr>
