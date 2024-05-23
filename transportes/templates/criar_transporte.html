@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static poll_extras %}
+{% load static poll_extras_transportes %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/transporte-form.css' %}">
 {% endblock css %}
@@ -13,6 +13,12 @@ Cadastro Transporte
     <div class="row">
         <div class="col-5">
             <h2>Cadastro de Transporte</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <label>Paciente:</label>
+            <span class="sub-title-form">{{paciente}}</span>
         </div>
     </div>
     {% for field in form %}

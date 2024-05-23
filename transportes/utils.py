@@ -1,6 +1,7 @@
 from django.db import models
 
 MOTIVO_CHOICES = (
+    (0, "--Selecione--"),
     (1, "Retorno"),
     (2, "Exames"),
     (3, "Quimioterapia"),

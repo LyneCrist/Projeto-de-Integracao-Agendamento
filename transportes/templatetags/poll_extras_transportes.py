@@ -23,7 +23,7 @@ def set_column_input(field: BoundField) -> str:
     fields = {
         "data_de_transporte": "col-2",
         "horario_de_atendimento": "col-2",
-        "motivo_de_transporte": "col-3",
+        "motivo_de_transporte": "col-2",
         "descricao_motivo": "col-5",
         "rua": "col-5",
         "bairro": "col-5",

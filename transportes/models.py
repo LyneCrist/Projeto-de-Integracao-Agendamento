@@ -1,19 +1,9 @@
 from django.db import models
 from pacientes.models import Paciente
+from transportes.utils import MOTIVO_CHOICES
 
 
 class Transporte(models.Model):
-
-    MOTIVO_CHOICES = (
-        (1, "Retorno"),
-        (2, "Exames"),
-        (3, "Quimioterapia"),
-        (4, "Internação"),
-        (5, "Procedimento"),
-        (6, "Radioterapia"),
-        (7, "Primeira-Consulta"),
-        (8, "Outros"),
-    )
 
     STATUS_CHOICES = ((1, "Confirmado"), (2, "Cancelado"), (3, "Realizado"))
 
