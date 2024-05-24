@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 
-import pacientes
-import transportes
 from .forms import TransporteForm
 from .models import Transporte
 from pacientes.models import Paciente
@@ -18,11 +16,11 @@ def listar(request):
     return render(request, "lista_transportes.html", context)
 
 
-def listar_por_paciente(request, paciente_id: int):
+def paciente_transportes(request, id: int):
 
     context = {}
 
-    paciente: Paciente = Paciente.objects.get(id=paciente_id)
+    paciente: Paciente = Paciente.objects.get(id=id)
 
     transportes = Transporte.objects.filter(paciente=paciente)
 
@@ -30,7 +28,7 @@ def listar_por_paciente(request, paciente_id: int):
 
     context["transportes"] = transportes
 
-    return render(request, "lista_transportes.html", context)
+    return render(request, "paciente_transportes.html", context)
 
 
 def cadastrar(request, paciente_id: int):
@@ -60,7 +58,8 @@ def cadastrar(request, paciente_id: int):
 
                 # messages.success(request, "Transporte cadastrado com sucesso")
 
-                return redirect("listar_por_paciente", paciente_id=paciente.pk)
+                # return redirect("listar_por_paciente", paciente_id=paciente.pk)
+                return redirect("listar_pacientes")
 
             except Exception as exc:
 

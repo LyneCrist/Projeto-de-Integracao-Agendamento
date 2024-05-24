@@ -1,16 +1,26 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+
+import pacientes
+
 from .models import Paciente
+from transportes.models import Transporte
 from .forms import PacienteForm
 from django.contrib import messages
+
+from django.db import connection
+
+from django.db.models import Count
 
 
 def listar(request):
 
     context = {}
 
-    context["pacientes"] = Paciente.objects.all()[:15]
+    context["pacientes"] = Paciente.objects.all().annotate(
+        total_transportes=Count("transporte")
+    )
 
     return render(request, "lista_pacientes.html", context)
 
