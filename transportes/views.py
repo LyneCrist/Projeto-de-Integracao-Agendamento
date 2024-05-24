@@ -5,6 +5,7 @@ from .models import Transporte
 from pacientes.models import Paciente
 
 from django.contrib import messages
+from django.db.models import QuerySet
 
 
 def listar(request):
@@ -20,11 +21,9 @@ def paciente_transportes(request, id: int):
 
     context = {}
 
-    paciente: Paciente = Paciente.objects.get(id=id)
+    transportes: QuerySet[Transporte] = Transporte.objects.filter(paciente=id)
 
-    transportes = Transporte.objects.filter(paciente=paciente)
-
-    context["nome"] = paciente.nome
+    context["nome"] = transportes[0].paciente.nome
 
     context["transportes"] = transportes
 
