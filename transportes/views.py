@@ -24,7 +24,7 @@ def paciente_transportes(request, id: int):
 
     transportes = Transporte.objects.filter(paciente=paciente)
 
-    context["paciente"] = paciente.nome
+    context["nome"] = paciente.nome
 
     context["transportes"] = transportes
 
@@ -33,13 +33,14 @@ def paciente_transportes(request, id: int):
 
 def cadastrar(request, paciente_id: int):
 
-    paciente = Paciente.objects.get(id=paciente_id)
+    paciente: Paciente = Paciente.objects.get(id=paciente_id)
 
     context = {}
 
     context["title"] = "Cadastra Transporte"
     context["paciente_id"] = paciente.pk
-    context["nome"] = paciente
+    context["nome"] = paciente.nome
+    context["cod_sus"] = paciente.cartao_sus
 
     if request.method == "POST":
 
