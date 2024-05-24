@@ -11,10 +11,6 @@ Lista Transportes
 <form action="" method="get" class="form_row_list">
 
     <div class="row">
-        <h3>{{ paciente }}</h3>
-    </div>
-
-    <div class="row">
         <div class="col-5">
             <table class="data-list-atlas">
                 <tr>
@@ -25,20 +21,17 @@ Lista Transportes
                 </tr>
                 {% for transporte in transportes %}
                 <tr>
-                    <td>{{ transporte.paciente.nome }}</td>
-                    <td>{{ transporte.data_de_transporte }} - {{ transporte.horario_de_atendimento }}</td>
+                    <td>{{ transporte.nome }}</td>
+                    <td>{{ transporte.data }} - {{ transporte.horario }}</td>
                     <td>{{ transporte.status }}</td>
                     <td class="td-align-center"">
-                        <!-- <a href=" {% url 'editar_transporte' transporte.id %}">Editar</a> -->
-                        Editar
+                        <a href=" {% url 'editar_transporte' transporte.id %}">Editar</a>
                     </td>
                     <td class="td-align-center"">
-                        <!-- <a href=" {% url 'concelar_transporte' transporte.id %}">Cancelar</a> -->
-                        Cancelar
+                        <a href=" {% url 'concelar_transporte' transporte.id %}">Cancelar</a>
                     </td>
                     <td class="td-align-center"">
-                        <!-- <a href=" {% url 'finalizar_transporte' transporte.id %}">Finalizar</a> -->
-                        Finalizar
+                        <a href=" {% url 'finalizar_transporte' transporte.id %}">Finalizar</a>
                     </td>
                 </tr>
                 {% endfor %}

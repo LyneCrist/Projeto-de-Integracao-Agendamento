@@ -3,16 +3,37 @@ from django.shortcuts import render, redirect
 from .forms import TransporteForm
 from .models import Transporte
 from pacientes.models import Paciente
-
 from django.contrib import messages
+from django.db.models import F
 from django.db.models import QuerySet
+from utils.choice_utils import filter_status_choices
+from .choices import STATUS_CHOICES
 
 
 def listar(request):
 
-    context = {}
+    transportes = (
+        Transporte.objects.annotate(
+            nome=F("paciente__nome"),
+            data=F("data_de_transporte"),
+            horario=F("horario_de_atendimento"),
+        )
+        .values(
+            "pk",
+            "nome",
+            "data",
+            "horario",
+            "status",
+        )
+        .order_by("-data_criacao")[:5]
+    )
 
-    context["transportes"] = Transporte.objects.all()
+    context = {
+        "transportes": map(
+            lambda transporte: filter_status_choices(transporte, STATUS_CHOICES),
+            transportes,
+        )
+    }
 
     return render(request, "lista_transportes.html", context)
 

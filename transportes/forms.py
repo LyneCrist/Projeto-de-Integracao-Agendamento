@@ -1,6 +1,6 @@
 from django import forms
 from common.util import CommonsUtil
-from .utils import MOTIVO_CHOICES
+from .choices import MOTIVO_CHOICES
 from .models import Transporte
 from datetime import datetime, time
 
