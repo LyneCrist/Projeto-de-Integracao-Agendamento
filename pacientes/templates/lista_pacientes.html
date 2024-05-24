@@ -21,7 +21,8 @@ Lista Pacientes
                     <th>Nome</th>
                     <th>Cartão SUS</th>
                     <th>Condições</th>
-                    <th colspan="5"></th>
+                    <th>Transportes</th>
+                    <th colspan="6"></th>
                 </tr>
                 {% for paciente in pacientes %}
                 <tr>
@@ -29,6 +30,11 @@ Lista Pacientes
                     <td>{{ paciente.cartao_sus }}</td>
                     <td>
                         <a href=" {% url 'editar_paciente' paciente.id %}">3</a>
+                    </td>
+                    <td>
+                        <a href=" {% url 'paciente_transportes' paciente.id %}">
+                            {{ paciente.total_transportes }}
+                        </a>
                     </td>
                     <td class="td-align-center"">
                         <a href=" {% url 'editar_paciente' paciente.id %}">Editar</a>
