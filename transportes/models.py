@@ -1,11 +1,9 @@
 from django.db import models
 from pacientes.models import Paciente
-from transportes.utils import MOTIVO_CHOICES
+from .choices import MOTIVO_CHOICES, STATUS_CHOICES
 
 
 class Transporte(models.Model):
-
-    STATUS_CHOICES = ((1, "Agendado"), (2, "Cancelado"), (3, "Realizado"))
 
     paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE)
 
