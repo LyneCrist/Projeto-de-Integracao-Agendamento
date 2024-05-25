@@ -116,10 +116,9 @@ def atualizar(request, id: int):
 
         context["erros"] = context["form"].errors.as_data()
 
-        print(context["erros"])
-
     context["id"] = transporte.pk
-
+    context["nome"] = transporte.paciente.nome
+    context["cod_sus"] = transporte.paciente.cartao_sus
     context["form"] = TransporteForm(instance=transporte)
 
     return render(request, "editar_transporte.html", context)
