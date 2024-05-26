@@ -112,8 +112,7 @@ input[type='radio']:checked:after {
     border: 2px solid white;
 }
 
-
-.form_row input[type=submit] {
+.form_row .button-confirm {
     width: 100%;
     background-color: #079c7e;
     cursor: pointer;

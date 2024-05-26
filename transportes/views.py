@@ -98,7 +98,7 @@ def cadastrar(request, paciente_id: int):
     return render(request, "criar_transporte.html", context)
 
 
-def atualizar(request, id: int):
+def editar(request, id: int):
 
     context = {}
 
@@ -124,24 +124,19 @@ def atualizar(request, id: int):
     return render(request, "editar_transporte.html", context)
 
 
-def excluir(request, id: int):
-
-    # if request.method == "POST":
+def cancelar(request, id):
 
     transporte = Transporte.objects.get(id=id)
-    transporte.delete()
+
+    if request.method == "GET":
+
+        return render(request, "cancelar_transporte.html", {"id": transporte.pk})
+
+    transporte.status = 2
+
+    transporte.save()
 
     return redirect("listar_transportes")
-
-
-def cancelar(request, id: int):
-
-    # if request.method == "POST":
-
-    # transporte = Transporte.objects.get(id=id)
-    # transporte.delete()
-
-    return redirect("concelar_transporte")
 
 
 def finalizar(request, id: int):
