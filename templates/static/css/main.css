@@ -83,6 +83,10 @@ body {
     margin: 6px 0 16px 0;
 }
 
+.row.row-center {
+    text-align: center;
+}
+
 .col-1 {
     width: 20%;
     /* border: 1px black solid; */
@@ -127,6 +131,31 @@ body {
 .row-alert.error {
     background: #f44336;
     color: white;
+}
+
+.form.button {
+    width: 100%;
+    background-color: #079c7e;
+    cursor: pointer;
+    padding: 13px 35px;
+    border-radius: 5px;
+    border: none;
+    color: white !important;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 20px 0px 20px;
+}
+
+.button.button-cancel {
+    width: 20%;
+    text-decoration: none;
+}
+
+.button.button-confirm {
+    width: 20%;
+    background-color: #f44336;
+    color: white
 }
 
 @media screen and (min-width : 320px) {
