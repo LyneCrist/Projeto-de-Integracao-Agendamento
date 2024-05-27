@@ -34,3 +34,13 @@ def set_column_input(field: BoundField) -> str:
     }
 
     return fields[field.name]
+
+
+@register.filter(name="set_status")
+def set_status(status: str) -> str:
+
+    return {
+        "CANCELADO": "status-cancelado",
+        "AGENDADO": "status-agendado",
+        "FINALIZADO": "status-finalizado",
+    }[status.upper()]
