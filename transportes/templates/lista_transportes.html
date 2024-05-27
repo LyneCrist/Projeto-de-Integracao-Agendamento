@@ -19,35 +19,31 @@ Lista Transportes
                 <tr>
                     <th>Paciente</th>
                     <th>Data e Hora de Consulta</th>
-                    <th style="text-align:center">Status</th>
+                    <th class="td-align-center">Status</th>
                     <th colspan="5"></th>
                 </tr>
                 {% for transporte in transportes %}
                 <tr>
                     <td>{{ transporte.nome }}</td>
                     <td>{{ transporte.data|date:"d/m/Y" }} - {{ transporte.horario }} hrs</td>
-                    <td style="text-align:center">{{ transporte.status }}</td>
-                    <td class="td-align-center"">
-                        {% if transporte.status not in 'Cancelado,Realizado' %} 
+
+                    <td class="td-align-center {{ transporte.status|set_status }}">{{ transporte.status }}</td>
+
+                    {% if transporte.status not in 'Cancelado,Realizado' %}
+
+                    <td class="td-align-center">
                         <a href=" {% url 'editar_transporte' transporte.id %}">Editar</a>
-                        {% else %}
-                        ---
-                        {% endif %}
                     </td>
                     <td class="td-align-center"">
-                        {% if transporte.status not in 'Cancelado,Realizado' %} 
                         <a href=" {% url 'cancelar_transporte' transporte.id %}">Cancelar</a>
-                        {% else %}
-                        ---
-                        {% endif %}
                     </td>
                     <td class="td-align-center"">
-                        {% if transporte.status not in 'Cancelado,Realizado' %} 
                         <a href=" {% url 'finalizar_transporte' transporte.id %}">Finalizar</a>
-                        {% else %}
-                        ---
-                        {% endif %}
                     </td>
+                    {% else %}
+                    <td colspan="3" class="td-align-center">&nbsp;</td>
+                    {% endif %}
+
                 </tr>
                 {% endfor %}
             </table>

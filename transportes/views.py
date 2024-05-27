@@ -1,13 +1,18 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from .forms import TransporteForm
 from .models import Transporte
+from .core import TransporteCore
+from .errors import CancelarTransporteError
+from .choices import STATUS_CHOICES
+
 from pacientes.models import Paciente
 from django.contrib import messages
 from django.db.models import F
 from django.db.models import QuerySet
 from utils.choice_utils import filter_status_choices
-from .choices import STATUS_CHOICES
 
 
 def listar(request):
@@ -126,17 +131,31 @@ def editar(request, id: int):
 
 def cancelar(request, id):
 
-    transporte = Transporte.objects.get(id=id)
+    try:
 
-    if request.method == "GET":
+        transporte = Transporte.objects.get(id=id)
 
-        return render(request, "cancelar_transporte.html", {"id": transporte.pk})
+        if request.method == "GET":
 
-    transporte.status = 2
+            return render(request, "cancelar_transporte.html", {"id": transporte.pk})
 
-    transporte.save()
+        TransporteCore().validar_cancelamento(
+            datetime.combine(
+                transporte.data_de_transporte, transporte.horario_de_atendimento
+            )
+        )
 
-    return redirect("listar_transportes")
+        transporte.status = 2
+
+        transporte.save()
+
+        return redirect("listar_transportes")
+
+    except CancelarTransporteError as exc:
+
+        messages.error(request, f"{exc.message}\n{exc.description}")
+
+        return redirect("listar_transportes")
 
 
 def finalizar(request, id: int):

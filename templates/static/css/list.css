@@ -65,4 +65,23 @@ a.button-link {
 
 .data-list-atlas .td-align-center {
     text-align: center;
+    color: white;
+}
+
+.td-align-center.status-cancelado {
+    background-color: red;
+}
+
+.td-align-center.status-agendado {
+    background-color: #24ac54;
+}
+
+.td-align-center.status-finalizado {
+    background-color: #0234d2;
+}
+
+.td-align-center.disable_button {
+    color: silver;
+    opacity: 0.9;
+    pointer-events: none
 }
