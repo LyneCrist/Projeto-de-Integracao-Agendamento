@@ -10,9 +10,15 @@ Cadastro Transporte
 
 <form action="{% url 'editar_transporte' id %}" method="post" class="form_row" name="frmTransporte" id="frmTransporte">
     {% csrf_token %}
+
+    <!-- <div class="button button-link">
+        <a href="{% url 'listar_transportes' %}">Voltar</a>
+    </div> -->
     <div class="row">
         <div class="col-5">
-            <h2>Editar Transporte</h2>
+            <div>
+                <h2>Editar Transporte</h2>
+            </div>
         </div>
     </div>
 

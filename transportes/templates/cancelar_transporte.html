@@ -8,7 +8,7 @@
 Excluir Transporte
 {% endblock title %}
 {% block content %}
-<form action="{% url 'cancelar_transporte' id %}" method="post" class="form">
+<form action="{% url 'cancelar_transporte' id %}" method="post" class="form" style="position: relative;top:100px">
     {% csrf_token %}
     <div class="row">
         <div class="col-5">
