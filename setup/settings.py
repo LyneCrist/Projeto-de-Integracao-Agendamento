@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "consultas.apps.ConsultasConfig",
     "condicoes.apps.CondicoesConfig",
     "transportes.apps.TransportesConfig",
-    "estudante.apps.EstudanteConfig",
+    "estudantes.apps.EstudantesConfig",
     # 'enderecos.apps.EnderecosConfig'
     # 'consultas.apps.ConsultasConfig'
 ]
