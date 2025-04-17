@@ -1,5 +1,5 @@
 ## Sobre
-Projeto desenvolvido com foco em acessibilidade e inclusão, voltado para o acompanhamento do histórico médico e do bem estar de alunos com necessidades especiais. A solução digital oferece uma interface intuitiva para pais e responsáveis inserirem registros importantes, além de permitir que professores e profissionais da educação acessem e atualizem essas informações de forma segura e centralizada.
+***Projeto de Integração e Agendamento*** é um *code camp* que aprensenta uma estrutura básica de operações **CRUD - Create (criar), Read (ler), Update (atualizar) e Delete (apagar)**. O core operacional é baseado na inclusão de registro para paciente e agendamento de transporte.
 
 O projeto é desenvolvido na linguagem [**Python 3.12.2**](https://www.python.org/downloads/release/python-3122/),  framework [**Django 5.0.4**](https://docs.djangoproject.com/en/5.0/releases/5.0.4/) e banco de dados [**SQLite**](https://www.sqlite.org/)
 
@@ -44,13 +44,15 @@ git pull
 ```
 Atualizando estrutura da base de dados
 ```powershell
-python manage.py makemigrate
-```
-Seguido de
-```powershell
 python manage.py migrate
 ```
 Executando o serviço Django
 ```powershell
 python manage.py runserver
 ```
+
+## Modelo de negócio
+
+### Transporte
+
+Sempre que um transporte for solicitado para um paciente, a mesma página que comporta o formulário de transporte deve também contemplar o formulário de condição do paciente, garantindo que o pedido de transporte seja exclusivo aquela condição.
